@@ -187,7 +187,7 @@ translations = {
 }
 
 # Language selection
-lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], format_func=lambda x: {"en": "English", "zh": "中文", "fr": "Français", "ar": "العربية"}[x])
+lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], format_func=lambda x: {"en": "🇬🇧 English", "zh": "🇨🇳 中文", "fr": "🇫🇷 Français", "ar": "🇸🇦 العربيةعربية"}[x])
 t = translations[lang]
 
 logo = Image.open("Icon.png")
