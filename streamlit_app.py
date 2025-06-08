@@ -445,3 +445,14 @@ st.subheader("⚠️ " + t["disclaimer"])
 st.write(t["disclaimer_text"])
 
 
+#MVP on June 7th, 2025
+# Footer
+st.markdown("---")
+st.markdown(
+    f"<div style='text-align: center; font-size: 0.8em; color: gray;'>"
+    f"© 2025 XL Financial Group | Version v1.0.0 – Multilingual IFRS 17 CSM Calculator"
+    f"</div>",
+    unsafe_allow_html=True
+)
+
+
