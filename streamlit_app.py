@@ -11,11 +11,45 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-st.set_page_config(page_title="IFRS 17 CSM Calculator", layout="centered")
-
-
 # --- Sample Excel Template Download
 from io import BytesIO
+
+st.set_page_config(page_title="IFRS 17 CSM Calculator", layout="centered")
+
+# --- Add Custom CSS Styling ---
+st.markdown("""
+    <style>
+    .stButton > button {
+        background-color: #007BFF;  /* Deep blue for buttons */
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .stButton > button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+    .stTextInput input {
+        border: 2px solid #007BFF;  /* Blue border for text input fields */
+    }
+    .stTextArea textarea {
+        border: 2px solid #007BFF;  /* Blue border for text areas */
+    }
+    .email_button {
+        background-color: #28a745;  /* Green background for Email Us button */
+        color: white;
+        border-radius: 5px;
+        padding: 12px 25px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .email_button:hover {
+        background-color: #218838; /* Darker green on hover */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 # 🌐 Multilingual Setup
 translations = {
@@ -394,12 +428,12 @@ if st.button(t["calculate"]):
 st.markdown("---")
 st.header("📬 " + t["contact_us"])
 
-# Email Us button
+# Email Us button with hover effect
 st.markdown(
     """
     <a href="mailto:youremail@example.com?subject=Contact%20Us%20Form%20Submission&body=Please%20include%20your%20message%20here."
     target="_blank">
-    <button style="background-color: #007BFF; color: white; font-size: 16px; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+    <button class="email_button">
         Email Us
     </button>
     </a>
