@@ -407,7 +407,7 @@ with st.form("contact_form"):
             payload = {
                 "service_id": service_id,
                 "template_id": template_id,
-                "public_key": public_key,
+                "user_id": public_key,
                 "template_params": {
                     "name": name,
                     "email": email,
