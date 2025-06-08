@@ -415,7 +415,7 @@ with st.form("contact_form"):
                 }
             }
 
-            response = requests.post("https://api.emailjs.com/api/v1.0/email/send", json=payload)
+            response = requests.post("https://api.emailjs.com/api/v1.0/email/send-smtp", json=payload)
 
             st.write("Status Code:", response.status_code)
             st.write("Response Text:", response.text)
