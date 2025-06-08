@@ -223,7 +223,7 @@ scenario_headers = {
         "Premiums": "Premiums",
         "Benefits": "Benefits",
         "Expenses": "Expenses",
-        "Coverage Units": "Coverage Units"
+        "Coverage Units": "Coverage Units",
     },
     "zh": {
         "Scenario Name": "情景名称",
@@ -232,7 +232,14 @@ scenario_headers = {
         "Premiums": "保费",
         "Benefits": "理赔",
         "Expenses": "费用",
-        "Coverage Units": "保障单位"
+        "Coverage Units": "保障单位",
+        "情景名称": "Scenario Name",
+        "贴现率 (%)": "Discount Rate (%)",
+        "风险调整 (%)": "Risk Adjustment (%)",
+        "保费": "Premiums",
+        "理赔": "Benefits",
+        "费用": "Expenses",
+        "保障单位": "CoverageUnits"
     },
     "fr": {
         "Scenario Name": "Nom du Scénario",
@@ -241,7 +248,14 @@ scenario_headers = {
         "Premiums": "Primes",
         "Benefits": "Prestations",
         "Expenses": "Frais",
-        "Coverage Units": "Unités de couverture"
+        "Coverage Units": "Unités de couverture",
+        "Nom du scénario": "Scenario Name",
+        "Taux d'actualisation (%)": "Discount Rate (%)",
+        "Ajustement pour risque (%)": "Risk Adjustment (%)",
+        "Primes": "Premiums",
+        "Prestations": "Benefits",
+        "Frais": "Expenses",
+        "Unités de couverture": "CoverageUnits"
     },
     "ar": {
         "Scenario Name": "اسم السيناريو",
@@ -250,7 +264,14 @@ scenario_headers = {
         "Premiums": "الأقساط",
         "Benefits": "المنافع",
         "Expenses": "النفقات",
-        "Coverage Units": "وحدات التغطية"
+        "Coverage Units": "وحدات التغطية",
+        "اسم السيناريو": "Scenario Name",
+        "معدل الخصم (%)": "Discount Rate (%)",
+        "نسبة تعديل المخاطر (%)": "Risk Adjustment (%)",
+        "الأقساط": "Premiums",
+        "المنافع": "Benefits",
+        "النفقات": "Expenses",
+        "وحدات التغطية": "CoverageUnits"
     }
 }
 
@@ -439,8 +460,22 @@ scenario_results = {}
 if scenario_file:
     try:
         df_scenarios = pd.read_excel(scenario_file, sheet_name="Scenarios")
+        original_columns = df_scenarios.columns.tolist()
+        st.write("🔍 Original Columns:", original_columns)
 
-        st.write("🔍 Columns loaded:", df_scenarios.columns.tolist())
+        # Normalize column names using language-aware mapping
+        column_map = {
+            scenario_headers[lang].get("Scenario Name", "Scenario Name"): "Scenario Name",
+            scenario_headers[lang].get("Discount Rate (%)", "Discount Rate (%)"): "Discount Rate (%)",
+            scenario_headers[lang].get("Risk Adjustment (%)", "Risk Adjustment (%)"): "Risk Adjustment (%)",
+            scenario_headers[lang].get("Premiums", "Premiums"): "Premiums",
+            scenario_headers[lang].get("Benefits", "Benefits"): "Benefits",
+            scenario_headers[lang].get("Expenses", "Expenses"): "Expenses",
+            scenario_headers[lang].get("Coverage Units", "Coverage Units"): "Coverage Units"
+        }
+        df_scenarios.rename(columns=column_map, inplace=True)
+        normalized_columns = df_scenarios.columns.tolist()
+        st.write("✅ Normalized Columns:", normalized_columns)
 
         st.dataframe(df_scenarios)
 
@@ -449,21 +484,24 @@ if scenario_file:
             premiums = parse_str_list(row["Premiums"])
             benefits = parse_str_list(row["Benefits"])
             expenses = parse_str_list(row["Expenses"])
-            coverage_units = [1] * len(premiums)
-            dr = float(row["Discount Rate (%)"]) / 100
-            ra = float(row["Risk Adjustment (%)"]) / 100
+            coverage_units = parse_str_list(row["Coverage Units"]) if "Coverage Units" in row else [1] * len(premiums)
 
-            pv_premiums = sum([p / ((1 + dr) ** i) for i, p in enumerate(premiums)])
-            pv_benefits = sum([b / ((1 + dr) ** i) for i, b in enumerate(benefits)])
-            pv_expenses = sum([e / ((1 + dr) ** i) for i, e in enumerate(expenses)])
+            discount_rate_scenario = float(row["Discount Rate (%)"]) / 100
+            ra_pct_scenario = float(row["Risk Adjustment (%)"]) / 100
+
+            # Compute CSM
+            pv_premiums = sum([p / ((1 + discount_rate_scenario) ** i) for i, p in enumerate(premiums)])
+            pv_benefits = sum([b / ((1 + discount_rate_scenario) ** i) for i, b in enumerate(benefits)])
+            pv_expenses = sum([e / ((1 + discount_rate_scenario) ** i) for i, e in enumerate(expenses)])
             total_pv = pv_benefits + pv_expenses
-            risk_adj = total_pv * ra
+            risk_adj = total_pv * ra_pct_scenario
             csm = pv_premiums - total_pv - risk_adj
 
             scenario_results[name] = {
                 "CSM": csm,
                 "Risk Adjustment": risk_adj
             }
+
 
         # Chart of Scenario CSMs
         if scenario_results:
@@ -472,15 +510,28 @@ if scenario_file:
 
             st.subheader(t["scenario_chart_title"])
             fig, ax = plt.subplots(figsize=(10, 5))
-            bars = ax.bar(scenario_names, csm_values)
+            colors = plt.cm.Set3(range(len(scenario_names)))  # Optional color palette
+            bars = ax.bar(scenario_names, csm_values, color=colors)
 
-            ax.set_xlabel("Scenario Name")
-            ax.set_ylabel("CSM")
-            ax.set_title(t["scenario_chart_title"])
+            ax.set_xlabel("Scenario", fontsize=12)
+            ax.set_ylabel("CSM", fontsize=12)
+            ax.set_title(t["scenario_chart_title"], fontsize=14, weight='bold')
+            ax.grid(True, axis='y', linestyle='--', alpha=0.6)
+            ax.set_facecolor('#f8f9fa')
+            fig.patch.set_facecolor('white')
+            plt.xticks(rotation=30, ha='right')
+            ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:,.0f}'))
 
             for bar, value in zip(bars, csm_values):
-                ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height(),
-                        f"{value:,.2f}", ha='center', va='bottom')
+                ax.text(
+                    bar.get_x() + bar.get_width() / 2,
+                    bar.get_height(),
+                    f"{value:,.0f}",
+                    ha='center',
+                    va='bottom',
+                    fontsize=10,
+                    fontweight='bold'
+                )
 
             st.pyplot(fig)
 
