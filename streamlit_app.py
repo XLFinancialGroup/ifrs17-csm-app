@@ -7,6 +7,9 @@ from PIL import Image
 import pandas as pd
 import os
 
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 st.set_page_config(page_title="IFRS 17 CSM Calculator", layout="centered")
 
 
@@ -397,51 +400,76 @@ with st.form("contact_form"):
 
     submitted = st.form_submit_button("📨 " + t["submit"])
 
-    service_id = st.secrets["EMAILJS_SERVICE_ID"]
-    template_id = st.secrets["EMAILJS_TEMPLATE_ID"]
-    public_key = st.secrets["EMAILJS_PUBLIC_KEY"]
-    
     if submitted:
         if name and email and message:
             # EmailJS payload
-            payload = {
-                "service_id": service_id,
-                "template_id": template_id,
-                "user_id": public_key,
-                "template_params": {
-                    "name": name,
-                    "email": email,
-                    "message": message
-                }
-            }
+            import smtplib
+            from email.mime.text import MIMEText
+            from email.mime.multipart import MIMEMultipart
+            import streamlit as st
 
-            response = requests.post("https://api.emailjs.com/api/v1.0/email/send-smtp", json=payload)
+            def send_email_via_smtp(name, email, message):
+                sender_email = "jamesxuwansi@gmail.com"  # Replace with your Gmail address
+                app_password = "gstd tasw shpj omrr"  # Replace with your Gmail App Password
+                recipient_email = "jamesxuwansi@gmail.com"  # Same as sender email for testing, can be different in production
 
-            st.write("Status Code:", response.status_code)
-            st.write("Response Text:", response.text)
-            st.write("Using public key:", public_key)
-            
-            if response.status_code == 200:
-                st.success(t["form_success"])
-                # Append to contact log CSV
-                log_file = "contact_log.csv"
-                new_entry = pd.DataFrame([{
-                    "Timestamp": pd.Timestamp.now(),
-                    "Name": name,
-                    "Email": email,
-                    "Message": message
-                }])
-                if os.path.exists(log_file):
-                    log_df = pd.read_csv(log_file)
-                    log_df = pd.concat([log_df, new_entry], ignore_index=True)
-                else:
-                    log_df = new_entry
-                log_df.to_csv(log_file, index=False)
+                # Create the email content
+                subject = f"New message from {name}"
+                body = f"""
+                You have received a new message from {name} ({email}):
+                
+                {message}
+                """
 
-            else:
-                st.error("❌ Failed to send. Please try again later.")
-        else:
-            st.error(t["form_error"])
+                # Prepare the email
+                msg = MIMEMultipart()
+                msg["From"] = sender_email
+                msg["To"] = recipient_email
+                msg["Subject"] = subject
+                msg.attach(MIMEText(body, "plain"))
+
+                try:
+                    # Connect to Gmail SMTP server
+                    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                        server.login(sender_email, app_password)
+                        server.sendmail(sender_email, recipient_email, msg.as_string())
+                    st.success("✅ Your message has been sent!")
+                except Exception as e:
+                    st.error(f"❌ Error sending message: {e}")
+
+
+            st.markdown("---")
+            st.header("📬 " + t["contact_us"])
+
+            with st.form("contact_form"):
+                name = st.text_input("👤 " + t["your_name"])
+                email = st.text_input("📧 " + t["your_email"])
+                message = st.text_area("💬 " + t["your_message"])
+
+                submitted = st.form_submit_button("📨 " + t["submit"])
+
+                if submitted:
+                    if name and email and message:
+                        # Call the email sending function
+                        send_email_via_smtp(name, email, message)
+                        
+                        # Log contact data to CSV
+                        log_file = "contact_log.csv"
+                        new_entry = pd.DataFrame([{
+                            "Timestamp": pd.Timestamp.now(),
+                            "Name": name,
+                            "Email": email,
+                            "Message": message
+                        }])
+                        if os.path.exists(log_file):
+                            log_df = pd.read_csv(log_file)
+                            log_df = pd.concat([log_df, new_entry], ignore_index=True)
+                        else:
+                            log_df = new_entry
+                        log_df.to_csv(log_file, index=False)
+
+                    else:
+                        st.error(t["form_error"])
 
 
 #For the About us and Disclaimers
