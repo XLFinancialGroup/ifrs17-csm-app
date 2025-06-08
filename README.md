@@ -2,6 +2,10 @@
 
 A multilingual, interactive web app to illustrate and calculate **IFRS 17 Contractual Service Margin (CSM)**, tailored for life insurance markets across **Asia, Africa, and the Middle East**.
 
+# IFRS 17 CSM Calculator App
+
+[![Release](https://img.shields.io/github/v/release/XLFinancialGroup/ifrs17-csm-app)](https://github.com/XLFinancialGroup/ifrs17-csm-app/releases)
+
 Developed by [XL Financial Group](#), this app helps actuaries, finance professionals, and insurance leaders explore IFRS 17 concepts with:
 
 - 📈 Dynamic CSM rollforward visualization
