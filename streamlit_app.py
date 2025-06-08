@@ -390,82 +390,20 @@ if st.button(t["calculate"]):
         )
 
 
-#Contact us form
+# --- Email Us Button Instead of Contact Form ---
 st.markdown("---")
 st.header("📬 " + t["contact_us"])
 
-with st.form("contact_form"):
-    name = st.text_input("👤 " + t["your_name"])
-    email = st.text_input("📧 " + t["your_email"])
-    message = st.text_area("💬 " + t["your_message"])
-
-    submitted = st.form_submit_button("📨 " + t["submit"])
-
-    if submitted:
-        if name and email and message:
-            
-            def send_email_via_smtp(name, email, message):
-                sender_email = st.secrets["GMAIL_EMAIL"]  # Your Gmail address (configured in Streamlit Secrets)
-                app_password = st.secrets["GMAIL_APP_PASSWORD"]  # Your Gmail App Password (configured in Streamlit Secrets)
-                recipient_email = st.secrets["RECIPIENT_EMAIL"]  # Recipient email (you can set this to the same as sender for now)
-
-                # Create the email content
-                subject = f"New message from {name}"
-                body = f"""
-                You have received a new message from {name} ({email}):
-                
-                {message}
-                """
-
-                # Prepare the email
-                msg = MIMEMultipart()
-                msg["From"] = sender_email
-                msg["To"] = recipient_email
-                msg["Subject"] = subject
-                msg.attach(MIMEText(body, "plain"))
-
-                try:
-                    # Connect to Gmail SMTP server
-                    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-                        server.login(sender_email, app_password)
-                        server.sendmail(sender_email, recipient_email, msg.as_string())
-                    st.success("✅ Your message has been sent!")
-                except Exception as e:
-                    st.error(f"❌ Error sending message: {e}")
-
-
-            st.markdown("---")
-            st.header("📬 " + t["contact_us"])
-
-            with st.form(key="contact_form"):
-                name = st.text_input("👤 " + t["your_name"])
-                email = st.text_input("📧 " + t["your_email"])
-                message = st.text_area("💬 " + t["your_message"])
-
-                submitted = st.form_submit_button("📨 " + t["submit"])
-
-                if submitted:
-                    if name and email and message:
-                        # Send the email when form is submitted
-                        send_email_via_smtp(name, email, message)
-                        
-                        # Log contact data to CSV
-                        log_file = "contact_log.csv"
-                        new_entry = pd.DataFrame([{
-                            "Timestamp": pd.Timestamp.now(),
-                            "Name": name,
-                            "Email": email,
-                            "Message": message
-                        }])
-                        if os.path.exists(log_file):
-                            log_df = pd.read_csv(log_file)
-                            log_df = pd.concat([log_df, new_entry], ignore_index=True)
-                        else:
-                            log_df = new_entry
-                        log_df.to_csv(log_file, index=False)
-
-                    else:
-                        st.error(t["form_error"])
+# Email Us button
+st.markdown(
+    """
+    <a href="mailto:youremail@example.com?subject=Contact%20Us%20Form%20Submission&body=Please%20include%20your%20message%20here."
+    target="_blank">
+    <button style="background-color: #007BFF; color: white; font-size: 16px; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Email Us
+    </button>
+    </a>
+    """, unsafe_allow_html=True)
 
 
 #For the About us and Disclaimers
