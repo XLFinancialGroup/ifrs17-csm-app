@@ -190,7 +190,7 @@ translations = {
 lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], format_func=lambda x: {"en": "English", "zh": "中文", "fr": "Français", "ar": "العربية"}[x])
 t = translations[lang]
 
-logo = Image.open("XL Financial Group Icon.png")
+logo = Image.open("Icon.png")
 st.image(logo, width=160) 
 
 st.title(t["title"])
