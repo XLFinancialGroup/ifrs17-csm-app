@@ -419,6 +419,7 @@ with st.form("contact_form"):
 
             st.write("Status Code:", response.status_code)
             st.write("Response Text:", response.text)
+            st.write("Using public key:", public_key)
             
             if response.status_code == 200:
                 st.success(t["form_success"])
