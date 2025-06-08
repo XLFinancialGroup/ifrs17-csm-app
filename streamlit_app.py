@@ -7,6 +7,7 @@ from PIL import Image
 import pandas as pd
 import os
 
+import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -402,16 +403,11 @@ with st.form("contact_form"):
 
     if submitted:
         if name and email and message:
-            # EmailJS payload
-            import smtplib
-            from email.mime.text import MIMEText
-            from email.mime.multipart import MIMEMultipart
-            import streamlit as st
-
+            
             def send_email_via_smtp(name, email, message):
-                sender_email = "jamesxuwansi@gmail.com"  # Replace with your Gmail address
-                app_password = "gstd tasw shpj omrr"  # Replace with your Gmail App Password
-                recipient_email = "jamesxuwansi@gmail.com"  # Same as sender email for testing, can be different in production
+                sender_email = st.secrets["GMAIL_EMAIL"]  # Your Gmail address (configured in Streamlit Secrets)
+                app_password = st.secrets["GMAIL_APP_PASSWORD"]  # Your Gmail App Password (configured in Streamlit Secrets)
+                recipient_email = st.secrets["RECIPIENT_EMAIL"]  # Recipient email (you can set this to the same as sender for now)
 
                 # Create the email content
                 subject = f"New message from {name}"
@@ -441,7 +437,7 @@ with st.form("contact_form"):
             st.markdown("---")
             st.header("📬 " + t["contact_us"])
 
-            with st.form("contact_form"):
+            with st.form(key="contact_form"):
                 name = st.text_input("👤 " + t["your_name"])
                 email = st.text_input("📧 " + t["your_email"])
                 message = st.text_area("💬 " + t["your_message"])
@@ -450,7 +446,7 @@ with st.form("contact_form"):
 
                 if submitted:
                     if name and email and message:
-                        # Call the email sending function
+                        # Send the email when form is submitted
                         send_email_via_smtp(name, email, message)
                         
                         # Log contact data to CSV
