@@ -397,13 +397,17 @@ with st.form("contact_form"):
 
     submitted = st.form_submit_button("📨 " + t["submit"])
 
+    service_id = st.secrets["EMAILJS_SERVICE_ID"]
+    template_id = st.secrets["EMAILJS_TEMPLATE_ID"]
+    public_key = st.secrets["EMAILJS_PUBLIC_KEY"]
+    
     if submitted:
         if name and email and message:
             # EmailJS payload
             payload = {
-                "service_id": "jamesxuwansi",
-                "template_id": "Actuarial_App_Template",
-                "public_key": "JCSeTdr-Wct39ICpJ",
+                "service_id": service_id,
+                "template_id": template_id,
+                "public_key": public_key,
                 "template_params": {
                     "name": name,
                     "email": email,
