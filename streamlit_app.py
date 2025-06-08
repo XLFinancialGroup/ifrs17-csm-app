@@ -403,7 +403,7 @@ with st.form("contact_form"):
             payload = {
                 "service_id": "jamesxuwansi",
                 "template_id": "Actuarial_App_Template",
-                "user_id": "JCSeTdr-Wct39ICpJ",
+                "public_key": "JCSeTdr-Wct39ICpJ",
                 "template_params": {
                     "name": name,
                     "email": email,
