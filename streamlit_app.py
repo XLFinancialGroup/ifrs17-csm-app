@@ -401,7 +401,7 @@ with st.form("contact_form"):
         if name and email and message:
             # EmailJS payload
             payload = {
-                "service_id": "jamesxuwansi@gmail.com",
+                "service_id": "jamesxuwansi",
                 "template_id": "Actuarial_App_Template",
                 "user_id": "JCSeTdr-Wct39ICpJ",
                 "template_params": {
@@ -454,5 +454,19 @@ st.markdown(
     f"</div>",
     unsafe_allow_html=True
 )
+
+
+st.info("📱 **Tip**: You can add this app to your phone's home screen for quicker access!")
+
+if st.button("📖 How to do this?"):
+    st.markdown("""
+    **On iPhone (Safari):**
+    1. Tap the **Share** icon
+    2. Tap **Add to Home Screen**
+    
+    **On Android (Chrome):**
+    1. Tap the **⋮ Menu** in top-right
+    2. Tap **Add to Home screen**
+    """)
 
 
