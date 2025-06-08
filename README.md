@@ -54,6 +54,20 @@ XL Financial Group specializes in **actuarial and financial modeling consulting*
 
 Want to explore consulting collaboration? Submit a message in the app or [email us](mailto:jamesxuwansi@gmail.com).
 
+## 🔒 License
+
+This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/) license.
+
+- You are free to use, adapt, and share the code for **non-commercial purposes**.
+- **Commercial use is strictly prohibited** without written permission.
+
+📬 If you're interested in commercial use, licensing, or partnerships, please contact:
+
+**James Xu**  
+Founder, XL Financial Group 
+(jamesxuwansi@gmail.com)
+(https://ifrs17-csm-app.streamlit.app/)
+
 ---
 
 📜 Disclaimer
