@@ -65,8 +65,8 @@ This project is licensed under the [Creative Commons Attribution-NonCommercial 4
 
 **James Xu**  
 Founder, XL Financial Group 
-(jamesxuwansi@gmail.com)
-(https://ifrs17-csm-app.streamlit.app/)
+[Email me](jamesxuwansi@gmail.com)
+[Link to the App](https://ifrs17-csm-app.streamlit.app/)
 
 ---
 
