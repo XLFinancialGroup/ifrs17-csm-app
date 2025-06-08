@@ -66,7 +66,28 @@ translations = {
         "scenario_analysis": "Scenario Analysis (Optional)",
         "download_scenario_template": "📥 Download Scenario Excel Template",
         "scenario_upload_label": "Upload Scenario Excel File",
-        "scenario_chart_title": "📊 CSM by Scenario"
+        "scenario_chart_title": "📊 CSM by Scenario",
+        "pricing_benchmark_title": "🧮 Pricing Benchmark Mode (Beta)",
+        "product_a_title": "Product A (Your Product)",
+        "product_b_title": "Benchmark Product B",
+        "premium_input": "Premiums",
+        "benefit_input": "Benefits",
+        "expense_input": "Expenses",
+        "discount_rate_input": "Discount Rate (%)",
+        "risk_adj_input": "Risk Adjustment (%)",
+        "compare_button": "Compare Products",
+        "comparison_table_title": "📊 Comparison Table",
+        "comparison_labels": [
+            "Present Value of Premiums",
+            "Total Present Value of Benefits + Expenses",
+            "Risk Adjustment",
+            "Resulting CSM"
+        ],
+        "mode_toggle_label": "🔀 Select Mode",
+        "mode_toggle_options": {
+            "csm": "📘 CSM Calculator Mode",
+            "benchmark": "🧮 Pricing Benchmark Mode"
+        }
 
 
     },
@@ -113,7 +134,28 @@ translations = {
         "scenario_analysis": "情景分析（可选）",
         "download_scenario_template": "📥 下载情景分析 Excel 模板",
         "scenario_upload_label": "上传情景分析文件",
-        "scenario_chart_title": "📊 各情景下的 CSM 比较"
+        "scenario_chart_title": "📊 各情景下的 CSM 比较",
+        "pricing_benchmark_title": "🧮 定价对比模式（测试版）",
+        "product_a_title": "产品 A（您的产品）",
+        "product_b_title": "基准产品 B",
+        "premium_input": "保费",
+        "benefit_input": "赔付",
+        "expense_input": "费用",
+        "discount_rate_input": "贴现率 (%)",
+        "risk_adj_input": "风险调整 (%)",
+        "compare_button": "比较产品",
+        "comparison_table_title": "📊 对比表格",
+        "comparison_labels": [
+            "保费现值",
+            "赔付和费用现值总和",
+            "风险调整",
+            "CSM 结果"
+        ],
+        "mode_toggle_label": "🔀 选择模式",
+        "mode_toggle_options": {
+            "csm": "📘 合同服务边际计算模式",
+            "benchmark": "🧮 定价基准对比模式"
+        }
 
     },
     "fr": {
@@ -159,7 +201,28 @@ translations = {
         "scenario_analysis": "Analyse de scénario (optionnelle)",
         "download_scenario_template": "📥 Télécharger le modèle Excel de scénario",
         "scenario_upload_label": "Téléverser un fichier de scénario",
-        "scenario_chart_title": "📊 CSM par scénario"
+        "scenario_chart_title": "📊 CSM par scénario",
+        "pricing_benchmark_title": "🧮 Mode de Référence de Tarification (Bêta)",
+        "product_a_title": "Produit A (Votre produit)",
+        "product_b_title": "Produit de référence B",
+        "premium_input": "Primes",
+        "benefit_input": "Prestations",
+        "expense_input": "Frais",
+        "discount_rate_input": "Taux d'actualisation (%)",
+        "risk_adj_input": "Ajustement pour risque (%)",
+        "compare_button": "Comparer les produits",
+        "comparison_table_title": "📊 Tableau comparatif",
+        "comparison_labels": [
+            "Valeur actuelle des primes",
+            "Valeur actuelle totale des prestations + frais",
+            "Ajustement pour risque",
+            "Marge de service contractuelle"
+        ],
+        "mode_toggle_label": "🔀 Sélectionner le mode",
+        "mode_toggle_options": {
+            "csm": "📘 Mode de calcul de la MSC",
+            "benchmark": "🧮 Mode de comparaison des tarifs"
+        }
 
     },
     "ar": {
@@ -205,7 +268,29 @@ translations = {
         "scenario_analysis": "تحليل السيناريو (اختياري)",
         "download_scenario_template": "📥 تنزيل قالب Excel للسيناريو",
         "scenario_upload_label": "تحميل ملف السيناريو",
-        "scenario_chart_title": "📊 الهامش حسب السيناريو"
+        "scenario_chart_title": "📊 الهامش حسب السيناريو",
+        "pricing_benchmark_title": "🧮 وضع مقارنة الأسعار (تجريبي)",
+        "product_a_title": "المنتج أ (منتجك)",
+        "product_b_title": "المنتج ب المرجعي",
+        "premium_input": "الأقساط",
+        "benefit_input": "المنافع",
+        "expense_input": "النفقات",
+        "discount_rate_input": "معدل الخصم (%)",
+        "risk_adj_input": "نسبة تعديل المخاطر (%)",
+        "compare_button": "قارن المنتجات",
+        "comparison_table_title": "📊 جدول المقارنة",
+        "comparison_labels": [
+            "القيمة الحالية للأقساط",
+            "إجمالي القيمة الحالية للمنافع + النفقات",
+            "تعديل المخاطر",
+            "هامش الخدمة التعاقدية"
+        ],
+        "mode_toggle_label": "🔀 اختر الوضع",
+        "mode_toggle_options": {
+            "csm": "📘 وضع حساب هامش الخدمة التعاقدية",
+            "benchmark": "🧮 وضع مقارنة الأسعار"
+        }
+
 
     }
 }
@@ -213,6 +298,14 @@ translations = {
 # Language selection
 lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], format_func=lambda x: {"en": "🇬🇧 English", "zh": "🇨🇳 中文", "fr": "🇫🇷 Français", "ar": "🇸🇦 العربيةعربية"}[x])
 t = translations[lang]
+
+# Mode toggle
+mode = st.radio(
+    label=t["mode_toggle_label"],
+    options=["csm", "benchmark"],
+    format_func=lambda x: t["mode_toggle_options"][x]
+)
+
 
 # Scenario template definition (multilingual support)
 scenario_headers = {
@@ -376,80 +469,128 @@ with st.expander(t["download_scenario_template"]):
     )
 
 
+#Toggle between CSM calculator and Pricing Benchmark
 
+#CSM calculator mode
+if mode == "csm":
 
-# --- Input Panel
-st.header(t["step1"])
-col1, col2 = st.columns(2)
+    # --- Input Panel
+    st.header(t["step1"])
+    col1, col2 = st.columns(2)
 
-with col1:
-    num_years = st.number_input(t["projection_years"], min_value=1, max_value=100, value=5)
-    discount_rate = st.number_input(t["discount_rate"], value=5.0) / 100
-    ra_pct = st.number_input(t["ra_percent"], value=5.0) / 100
-    use_excel = st.checkbox(t["upload"])
+    with col1:
+        num_years = st.number_input(t["projection_years"], min_value=1, max_value=100, value=5)
+        discount_rate = st.number_input(t["discount_rate"], value=5.0) / 100
+        ra_pct = st.number_input(t["ra_percent"], value=5.0) / 100
+        use_excel = st.checkbox(t["upload"])
 
-with col2:
-    premiums = benefits = expenses = coverage_units = None
-    if not use_excel:
-        default_premium = st.text_input(t["input_premium"], "100,100,100,100,100")
-        default_benefit = st.text_input(t["input_benefit"], "30,30,30,30,30")
-        default_expense = st.text_input(t["input_expense"], "10,10,10,10,10")
-        premiums = [float(x) for x in default_premium.split(",")]
-        benefits = [float(x) for x in default_benefit.split(",")]
-        expenses = [float(x) for x in default_expense.split(",")]
-        coverage_units = [1] * len(premiums)
-    else:
-        uploaded_file = st.file_uploader(t["upload"], type=["xlsx"])
+    with col2:
+        premiums = benefits = expenses = coverage_units = None
+        if not use_excel:
+            default_premium = st.text_input(t["input_premium"], "100,100,100,100,100")
+            default_benefit = st.text_input(t["input_benefit"], "30,30,30,30,30")
+            default_expense = st.text_input(t["input_expense"], "10,10,10,10,10")
+            premiums = [float(x) for x in default_premium.split(",")]
+            benefits = [float(x) for x in default_benefit.split(",")]
+            expenses = [float(x) for x in default_expense.split(",")]
+            coverage_units = [1] * len(premiums)
+        else:
+            uploaded_file = st.file_uploader(t["upload"], type=["xlsx"])
 
-        if uploaded_file:
-            try:
-                df = pd.read_excel(uploaded_file)
+            if uploaded_file:
+                try:
+                    df = pd.read_excel(uploaded_file)
 
-                # 🔁 Step 1: Language-based reverse column mapping
-                column_mapping = {
-                    "zh": {
-                        "保费": "Premium",
-                        "赔付": "Benefit",
-                        "费用": "Expense",
-                        "服务期单位": "CoverageUnits"
-                    },
-                    "fr": {
-                        "Prime": "Premium",
-                        "Prestation": "Benefit",
-                        "Frais": "Expense",
-                        "Unités de couverture": "CoverageUnits"
-                    },
-                    "ar": {
-                        "القسط": "Premium",
-                        "المنفعة": "Benefit",
-                        "المصاريف": "Expense",
-                        "وحدات التغطية": "CoverageUnits"
-                    },
-                    "en": {
-                        "Premium": "Premium",
-                        "Benefit": "Benefit",
-                        "Expense": "Expense",
-                        "CoverageUnits": "CoverageUnits"
+                    # 🔁 Step 1: Language-based reverse column mapping
+                    column_mapping = {
+                        "zh": {
+                            "保费": "Premium",
+                            "赔付": "Benefit",
+                            "费用": "Expense",
+                            "服务期单位": "CoverageUnits"
+                        },
+                        "fr": {
+                            "Prime": "Premium",
+                            "Prestation": "Benefit",
+                            "Frais": "Expense",
+                            "Unités de couverture": "CoverageUnits"
+                        },
+                        "ar": {
+                            "القسط": "Premium",
+                            "المنفعة": "Benefit",
+                            "المصاريف": "Expense",
+                            "وحدات التغطية": "CoverageUnits"
+                        },
+                        "en": {
+                            "Premium": "Premium",
+                            "Benefit": "Benefit",
+                            "Expense": "Expense",
+                            "CoverageUnits": "CoverageUnits"
+                        }
                     }
-                }
 
-                # 🔁 Step 2: Normalize column names
-                df.rename(columns=column_mapping.get(lang, {}), inplace=True)
+                    # 🔁 Step 2: Normalize column names
+                    df.rename(columns=column_mapping.get(lang, {}), inplace=True)
 
-                # ✅ Step 3: Check for required columns
-                required_cols = ["Scenario Name", "Premium", "Benefit", "Expense"]
-                missing = [col for col in required_cols if col not in df.columns]
-                if missing:
-                    st.error(f"❌ Missing required column(s): {', '.join(missing)}")
+                    # ✅ Step 3: Check for required columns
+                    required_cols = ["Scenario Name", "Premium", "Benefit", "Expense"]
+                    missing = [col for col in required_cols if col not in df.columns]
+                    if missing:
+                        st.error(f"❌ Missing required column(s): {', '.join(missing)}")
+                        st.stop()
+
+                    # ✅ Optional: preview
+                    st.write(t.get("preview_uploaded_file", "📄 Preview of uploaded file:"))
+                    st.dataframe(df)
+
+                except Exception as e:
+                    st.error(f"⚠️ Error processing file: {str(e)}")
                     st.stop()
 
-                # ✅ Optional: preview
-                st.write(t.get("preview_uploaded_file", "📄 Preview of uploaded file:"))
-                st.dataframe(df)
+# --- Pricing Benchmark Mode ---
+elif mode == "benchmark":
+    st.subheader(t["pricing_benchmark_title"])
+    
+    st.markdown("### " + t["product_a_title"])
+    premium_a = st.text_input(f"{t['premium_input']} A", "100,100,100")
+    benefit_a = st.text_input(f"{t['benefit_input']} A", "50,50,50")
+    expense_a = st.text_input(f"{t['expense_input']} A", "10,10,10")
+    discount_a = st.number_input(f"{t['discount_rate_input']} A", value=5.0) / 100
+    ra_a = st.number_input(f"{t['risk_adj_input']} A", value=5.0) / 100
 
-            except Exception as e:
-                st.error(f"⚠️ Error processing file: {str(e)}")
-                st.stop()
+    st.markdown("### " + t["product_b_title"])
+    premium_b = st.text_input(f"{t['premium_input']} B", "100,100,100")
+    benefit_b = st.text_input(f"{t['benefit_input']} B", "60,60,60")
+    expense_b = st.text_input(f"{t['expense_input']} B", "15,15,15")
+    discount_b = st.number_input(f"{t['discount_rate_input']} B", value=4.0) / 100
+    ra_b = st.number_input(f"{t['risk_adj_input']} B", value=4.0) / 100
+
+    if st.button(t["compare_button"]):
+        def compute_csm(prem, ben, exp, dsc, ra):
+            prem_list = parse_str_list(prem)
+            ben_list = parse_str_list(ben)
+            exp_list = parse_str_list(exp)
+            pv_prem = sum([p / ((1 + dsc) ** i) for i, p in enumerate(prem_list)])
+            pv_benefits = sum([b / ((1 + dsc) ** i) for i, b in enumerate(ben_list)])
+            pv_expenses = sum([e / ((1 + dsc) ** i) for i, e in enumerate(exp_list)])
+            total_pv = pv_benefits + pv_expenses
+            ra_val = total_pv * ra
+            csm = pv_prem - total_pv - ra_val
+            return pv_prem, total_pv, ra_val, csm
+
+        result_a = compute_csm(premium_a, benefit_a, expense_a, discount_a, ra_a)
+        result_b = compute_csm(premium_b, benefit_b, expense_b, discount_b, ra_b)
+
+        df_compare = pd.DataFrame({
+            "": t["comparison_labels"],
+            t["product_a_title"]: result_a,
+            t["product_b_title"]: result_b
+        })
+
+        st.subheader(t["comparison_table_title"])
+        st.dataframe(df_compare)
+
+
 
 # --- Scenario Analysis Section
 st.subheader("📊 " + t["scenario_analysis"])
@@ -633,14 +774,16 @@ if st.button(t["calculate"]):
         )
 
 
+
+
 # --- Email Us Button Instead of Contact Form ---
 st.markdown("---")
 st.header("📬 " + t["contact_us"])
 
-# Email Us button with hover effect
+# Email Us button with hover effect 
 st.markdown(
     """
-    <a href="mailto:youremail@example.com?subject=Contact%20Us%20Form%20Submission&body=Please%20include%20your%20message%20here."
+    <a href="mailto:jamesxuwansi@gmail.com?subject=Contact%20Us%20Form%20Submission&body=Please%20include%20your%20message%20here."
     target="_blank">
     <button class="email_button">
         Email Us
@@ -681,5 +824,6 @@ if st.button("📖 How to do this?"):
     1. Tap the **⋮ Menu** in top-right
     2. Tap **Add to Home screen**
     """)
+
 
 
