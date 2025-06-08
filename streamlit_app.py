@@ -14,6 +14,9 @@ from email.mime.multipart import MIMEMultipart
 # --- Sample Excel Template Download
 from io import BytesIO
 
+# Step-by-step Integration: "Did You Know?" Insights Section with Multilingual Support
+import random
+
 
 
 
@@ -87,7 +90,8 @@ translations = {
         "mode_toggle_options": {
             "csm": "📘 CSM Calculator Mode",
             "benchmark": "🧮 Pricing Benchmark Mode"
-        }
+        },
+        "did_you_know_title": "💡 Did You Know?"
 
 
     },
@@ -155,7 +159,8 @@ translations = {
         "mode_toggle_options": {
             "csm": "📘 合同服务边际计算模式",
             "benchmark": "🧮 定价基准对比模式"
-        }
+        },
+        "did_you_know_title": "💡 你知道吗？"
 
     },
     "fr": {
@@ -222,7 +227,8 @@ translations = {
         "mode_toggle_options": {
             "csm": "📘 Mode de calcul de la MSC",
             "benchmark": "🧮 Mode de comparaison des tarifs"
-        }
+        },
+        "did_you_know_title": "💡 Le Saviez-Vous ?"
 
     },
     "ar": {
@@ -289,7 +295,8 @@ translations = {
         "mode_toggle_options": {
             "csm": "📘 وضع حساب هامش الخدمة التعاقدية",
             "benchmark": "🧮 وضع مقارنة الأسعار"
-        }
+        },
+        "did_you_know_title": "💡 هل كنت تعلم؟"
 
 
     }
@@ -790,6 +797,56 @@ st.markdown(
     </button>
     </a>
     """, unsafe_allow_html=True)
+
+# Step 1: Define multilingual insights dictionary
+did_you_know_facts = {
+    "en": [
+        "Did you know? The Contractual Service Margin (CSM) cannot be negative. Any shortfall goes to the P&L immediately as a loss component.",
+        "Did you know? Acquisition cash flows are included in the initial measurement of CSM and recognized over the coverage period.",
+        "Did you know? Risk Adjustment reflects the compensation the entity requires for bearing non-financial risk.",
+        "Did you know? Groups of insurance contracts must be segmented into at least three buckets: profitable, onerous, and no significant risk of becoming onerous.",
+        "Did you know? IFRS 17 requires entities to reassess assumptions at each reporting date—making automation critical.",
+        "Did you know? Under IFRS 17, insurance revenue is not equal to premiums received—it’s based on service provided.",
+        "Did you know? The General Measurement Model (GMM) is the default approach under IFRS 17.",
+        "Did you know? For contracts with direct participation features, the Variable Fee Approach (VFA) must be used."
+    ],
+    "zh": [
+        "你知道吗？合同服务边际（CSM）不能为负，任何短缺将立即计入利润表为亏损部分。",
+        "你知道吗？取得现金流包括在CSM初始计量中，并在保障期内分摊确认。",
+        "你知道吗？风险调整反映公司因承担非财务风险而要求的补偿。",
+        "你知道吗？保险合同组必须至少分为三类：盈利、亏损和无重大亏损风险。",
+        "你知道吗？IFRS 17 要求在每个报告日重新评估假设，因此自动化尤为重要。",
+        "你知道吗？根据 IFRS 17，保险收入不是等于收到的保费，而是基于已提供的服务确认。",
+        "你知道吗？一般计量模型（GMM）是 IFRS 17 的默认计量方法。",
+        "你知道吗？对于具有直接参与特征的合同，必须使用可变费用法（VFA）。"
+    ],
+    "fr": [
+        "Le saviez-vous ? La Marge de Service Contractuelle (MSC) ne peut pas être négative. Tout déficit est imputé immédiatement au résultat.",
+        "Le saviez-vous ? Les flux de trésorerie d'acquisition sont inclus dans la MSC initiale et reconnus sur la durée de couverture.",
+        "Le saviez-vous ? L'ajustement pour risque reflète la compensation requise pour le risque non financier.",
+        "Le saviez-vous ? Les groupes de contrats doivent être segmentés en trois catégories : profitables, déficitaires et à faible risque de devenir déficitaires.",
+        "Le saviez-vous ? IFRS 17 exige la réévaluation des hypothèses à chaque date de reporting.",
+        "Le saviez-vous ? En IFRS 17, les revenus d'assurance ne sont pas égaux aux primes reçues mais au service fourni.",
+        "Le saviez-vous ? Le Modèle de Mesure Général (GMM) est l'approche par défaut selon IFRS 17.",
+        "Le saviez-vous ? Les contrats avec participation directe doivent utiliser l'approche à frais variables (VFA)."
+    ],
+    "ar": [
+        "هل تعلم؟ لا يمكن أن يكون هامش الخدمة التعاقدية (CSM) سالبًا. يتم تحويل أي عجز مباشرة إلى بيان الدخل كعنصر خسارة.",
+        "هل تعلم؟ يتم تضمين التدفقات النقدية الخاصة بالاكتتاب في القياس الابتدائي لهامش CSM ويتم الاعتراف بها على مدى فترة التغطية.",
+        "هل تعلم؟ يعكس تعديل المخاطر التعويض الذي تتطلبه الشركة لتحمل المخاطر غير المالية.",
+        "هل تعلم؟ يجب تصنيف مجموعات عقود التأمين إلى ثلاث مجموعات: مربحة، خاسرة، وعديمة خطر الخسارة.",
+        "هل تعلم؟ يتطلب معيار IFRS 17 إعادة تقييم الفرضيات في كل تاريخ تقرير، مما يجعل الأتمتة أمرًا حاسمًا.",
+        "هل تعلم؟ بموجب IFRS 17، لا تساوي إيرادات التأمين الأقساط المستلمة بل تُحتسب على أساس الخدمة المقدمة.",
+        "هل تعلم؟ يُعتبر النموذج العام للقياس (GMM) هو الأسلوب الافتراضي ضمن IFRS 17.",
+        "هل تعلم؟ يجب استخدام طريقة الرسوم المتغيرة (VFA) للعقود ذات الميزات التشاركية المباشرة."
+    ]
+}
+
+# Step 2: Display a random fact block under a new section
+st.markdown("---")
+st.subheader(t["did_you_know_title"])
+random_fact = random.choice(did_you_know_facts.get(lang, did_you_know_facts["en"]))
+st.info(random_fact)
 
 
 #For the About us and Disclaimers
