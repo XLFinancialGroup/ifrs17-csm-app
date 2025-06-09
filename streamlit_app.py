@@ -91,7 +91,8 @@ translations = {
             "csm": "📘 CSM Calculator Mode",
             "benchmark": "🧮 Pricing Benchmark Mode"
         },
-        "did_you_know_title": "💡 Did You Know?"
+        "did_you_know_title": "💡 Did You Know?",
+        "tutorial_toggle": "❓ Enable Tutorial Mode"
 
 
     },
@@ -160,7 +161,8 @@ translations = {
             "csm": "📘 合同服务边际计算模式",
             "benchmark": "🧮 定价基准对比模式"
         },
-        "did_you_know_title": "💡 你知道吗？"
+        "did_you_know_title": "💡 你知道吗？",
+        "tutorial_toggle": "❓ 启用教程模式"
 
     },
     "fr": {
@@ -228,7 +230,8 @@ translations = {
             "csm": "📘 Mode de calcul de la MSC",
             "benchmark": "🧮 Mode de comparaison des tarifs"
         },
-        "did_you_know_title": "💡 Le Saviez-Vous ?"
+        "did_you_know_title": "💡 Le Saviez-Vous ?",
+        "tutorial_toggle": "❓ Activer le mode tutoriel"
 
     },
     "ar": {
@@ -296,11 +299,47 @@ translations = {
             "csm": "📘 وضع حساب هامش الخدمة التعاقدية",
             "benchmark": "🧮 وضع مقارنة الأسعار"
         },
-        "did_you_know_title": "💡 هل كنت تعلم؟"
+        "did_you_know_title": "💡 هل كنت تعلم؟",
+        "tutorial_toggle": "❓ تفعيل وضع الشرح"
+
 
 
     }
 }
+
+tutorial_text = {
+    "en": {
+        "intro": "Welcome to Tutorial Mode! This mode provides guidance at each step.",
+        "step1": "Here you can input your assumptions manually or upload an Excel file.",
+        "step2": "Click 'Calculate' to compute the Contractual Service Margin (CSM).",
+        "scenario": "You can also upload a scenario file to perform CSM stress testing.",
+        "charts": "Below, you'll see visual outputs of the CSM, RA release, and cash flows."
+    },
+    "zh": {
+        "intro": "欢迎使用教程模式！我们会在每个步骤提供说明。",
+        "step1": "在这里，您可以手动输入假设，或上传 Excel 文件。",
+        "step2": "点击“计算”按钮，即可计算合同服务边际 (CSM)。",
+        "scenario": "您还可以上传情景文件，进行压力测试。",
+        "charts": "下方将展示 CSM、风险调整释放、及现金流的可视化图表。"
+    },
+    "fr": {
+        "intro": "Bienvenue dans le mode tutoriel ! Ce mode vous guide étape par étape.",
+        "step1": "Ici, vous pouvez saisir vos hypothèses manuellement ou télécharger un fichier Excel.",
+        "step2": "Cliquez sur 'Calculer' pour obtenir la Marge de Service Contractuelle (MSC).",
+        "scenario": "Vous pouvez également télécharger un fichier de scénario pour effectuer des tests de résistance.",
+        "charts": "Ci-dessous, vous verrez des graphiques sur la MSC, la libération du RA et les flux de trésorerie."
+    },
+    "ar": {
+        "intro": "مرحبًا بك في وضع الشرح! سنرشدك في كل خطوة.",
+        "step1": "هنا يمكنك إدخال الفرضيات يدويًا أو تحميل ملف Excel.",
+        "step2": "اضغط على 'احسب' لحساب هامش الخدمة التعاقدية (CSM).",
+        "scenario": "يمكنك أيضًا تحميل ملف سيناريو لإجراء اختبار الضغط.",
+        "charts": "في الأسفل، سترى رسومًا بيانية لـ CSM، إصدار RA، وتدفقات التأمين النقدية."
+    }
+}
+
+
+
 
 # Language selection
 lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], format_func=lambda x: {"en": "🇬🇧 English", "zh": "🇨🇳 中文", "fr": "🇫🇷 Français", "ar": "🇸🇦 العربيةعربية"}[x])
@@ -312,6 +351,11 @@ mode = st.radio(
     options=["csm", "benchmark"],
     format_func=lambda x: t["mode_toggle_options"][x]
 )
+
+show_tutorial = st.checkbox(t["tutorial_toggle"])
+if show_tutorial:
+    st.info(tutorial_text[lang]["intro"])
+
 
 
 # Scenario template definition (multilingual support)
@@ -484,6 +528,9 @@ if mode == "csm":
     # --- Input Panel
     st.header(t["step1"])
     col1, col2 = st.columns(2)
+    if show_tutorial:
+        st.info(tutorial_text[lang]["step1"])
+
 
     with col1:
         num_years = st.number_input(t["projection_years"], min_value=1, max_value=100, value=5)
@@ -601,6 +648,9 @@ elif mode == "benchmark":
 
 # --- Scenario Analysis Section
 st.subheader("📊 " + t["scenario_analysis"])
+if show_tutorial:
+    st.info(tutorial_text[lang]["scenario"])
+
 
 scenario_file = st.file_uploader(t["scenario_upload_label"], type=["xlsx"], key="scenario")
 scenario_results = {}
@@ -690,6 +740,10 @@ if scenario_file:
 
 # --- CSM Calculation
 st.header(t["step2"])
+if show_tutorial:
+    st.info(tutorial_text[lang]["step2"])
+
+
 if st.button(t["calculate"]):
     if None in (premiums, benefits, expenses, coverage_units):
         st.error("Missing inputs. Please provide all required fields.")
@@ -727,7 +781,7 @@ if st.button(t["calculate"]):
                 csm_start = csm_end
             return csm_release, csm_balance
 
-        def show_csm_chart(csm_total, premiums, benefits, expenses, risk_adj, num_years, discount_rate, coverage_units):
+        def show_csm_chart(csm_total, premiums, benefits, expenses, risk_adj, num_years, discount_rate, coverage_units, show_tutorial=False):
             years = list(range(1, num_years + 1))
             if coverage_units is None:
                 coverage_units = [1] * num_years
@@ -735,6 +789,10 @@ if st.button(t["calculate"]):
             csm_release, csm_balance = calculate_csm_dynamic_release(csm_total, discount_rate, coverage_units)
             total_units = sum(coverage_units)
             ra_release = [risk_adj * (u / total_units) for u in coverage_units]
+
+            if show_tutorial:
+                st.info(tutorial_text[lang]["charts"])
+
 
             st.subheader(t["csm_release_title"])
             fig1, ax1 = plt.subplots(figsize=(10, 4))
