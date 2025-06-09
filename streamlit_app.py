@@ -92,7 +92,15 @@ translations = {
             "benchmark": "🧮 Pricing Benchmark Mode"
         },
         "did_you_know_title": "💡 Did You Know?",
-        "tutorial_toggle": "❓ Enable Tutorial Mode"
+        "tutorial_toggle": "❓ Enable Tutorial Mode",
+        "model_repo_title": "Model Repository (Beta)",
+        "model_repo_mode_label": "What would you like to do?",
+        "model_repo_upload": "📤 Upload a Model",
+        "model_repo_browse": "📁 Browse Models",
+        "model_repo_upload_label": "Upload your IFRS 17 Model (.xlsx)",
+        "model_repo_name_label": "Model Name / Description",
+        "model_repo_success": "✅ Model uploaded successfully!",
+        "model_repo_none": "📭 No models have been uploaded yet."
 
 
     },
@@ -162,7 +170,15 @@ translations = {
             "benchmark": "🧮 定价基准对比模式"
         },
         "did_you_know_title": "💡 你知道吗？",
-        "tutorial_toggle": "❓ 启用教程模式"
+        "tutorial_toggle": "❓ 启用教程模式",
+        "model_repo_title": "模型库（测试版）",
+        "model_repo_mode_label": "您希望执行的操作？",
+        "model_repo_upload": "📤 上传模型",
+        "model_repo_browse": "📁 浏览模型",
+        "model_repo_upload_label": "上传您的 IFRS 17 模型（.xlsx）",
+        "model_repo_name_label": "模型名称 / 描述",
+        "model_repo_success": "✅ 模型上传成功！",
+        "model_repo_none": "📭 当前没有上传的模型。"
 
     },
     "fr": {
@@ -231,7 +247,15 @@ translations = {
             "benchmark": "🧮 Mode de comparaison des tarifs"
         },
         "did_you_know_title": "💡 Le Saviez-Vous ?",
-        "tutorial_toggle": "❓ Activer le mode tutoriel"
+        "tutorial_toggle": "❓ Activer le mode tutoriel",
+        "model_repo_title": "Répertoire de Modèles (Bêta)",
+        "model_repo_mode_label": "Que souhaitez-vous faire ?",
+        "model_repo_upload": "📤 Télécharger un modèle",
+        "model_repo_browse": "📁 Parcourir les modèles",
+        "model_repo_upload_label": "Téléchargez votre modèle IFRS 17 (.xlsx)",
+        "model_repo_name_label": "Nom / Description du modèle",
+        "model_repo_success": "✅ Modèle téléchargé avec succès !",
+        "model_repo_none": "📭 Aucun modèle n’a encore été téléchargé."
 
     },
     "ar": {
@@ -300,7 +324,15 @@ translations = {
             "benchmark": "🧮 وضع مقارنة الأسعار"
         },
         "did_you_know_title": "💡 هل كنت تعلم؟",
-        "tutorial_toggle": "❓ تفعيل وضع الشرح"
+        "tutorial_toggle": "❓ تفعيل وضع الشرح",
+        "model_repo_title": "مستودع النماذج (تجريبي)",
+        "model_repo_mode_label": "ماذا ترغب أن تفعل؟",
+        "model_repo_upload": "📤 تحميل نموذج",
+        "model_repo_browse": "📁 استعراض النماذج",
+        "model_repo_upload_label": "حمّل نموذج IFRS 17 الخاص بك (.xlsx)",
+        "model_repo_name_label": "اسم / وصف النموذج",
+        "model_repo_success": "✅ تم تحميل النموذج بنجاح!",
+        "model_repo_none": "📭 لا توجد نماذج مرفوعة حالياً."
 
 
 
@@ -355,6 +387,35 @@ mode = st.radio(
 show_tutorial = st.checkbox(t["tutorial_toggle"])
 if show_tutorial:
     st.info(tutorial_text[lang]["intro"])
+
+st.markdown("---")
+st.subheader("📂 " + t["model_repo_title"])
+
+repo_mode = st.radio(t["model_repo_mode_label"], [t["model_repo_upload"], t["model_repo_browse"]])
+
+if repo_mode == t["model_repo_upload"]:
+    uploaded_model = st.file_uploader(t["model_repo_upload_label"], type=["xlsx"])
+    model_name = st.text_input(t["model_repo_name_label"])
+
+    if uploaded_model and model_name:
+        save_path = os.path.join("repository", model_name + ".xlsx")
+        os.makedirs("repository", exist_ok=True)
+
+        with open(save_path, "wb") as f:
+            f.write(uploaded_model.getbuffer())
+        st.success(t["model_repo_success"])
+
+elif repo_mode == t["model_repo_browse"]:
+    repo_dir = "repository"
+    if os.path.exists(repo_dir) and os.listdir(repo_dir):
+        for file in os.listdir(repo_dir):
+            if file.endswith(".xlsx"):
+                with open(os.path.join(repo_dir, file), "rb") as f:
+                    st.download_button(label=f"📥 Download {file}", data=f, file_name=file)
+    else:
+        st.info(t["model_repo_none"])
+
+
 
 
 
