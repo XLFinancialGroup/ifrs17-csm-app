@@ -6,6 +6,7 @@ import requests
 from PIL import Image
 import pandas as pd
 import os
+import datetime
 
 import smtplib
 from email.mime.text import MIMEText
@@ -17,7 +18,9 @@ from io import BytesIO
 # Step-by-step Integration: "Did You Know?" Insights Section with Multilingual Support
 import random
 
-
+import io
+import xlsxwriter
+from io import BytesIO
 
 
 
@@ -100,7 +103,11 @@ translations = {
         "model_repo_upload_label": "Upload your IFRS 17 Model (.xlsx)",
         "model_repo_name_label": "Model Name / Description",
         "model_repo_success": "✅ Model uploaded successfully!",
-        "model_repo_none": "📭 No models have been uploaded yet."
+        "model_repo_none": "📭 No models have been uploaded yet.",
+        "download_excel_button": "Download IFRS 17 Scenario-based Excel Report",
+        "scenario": "Scenario",
+        "risk_adjustment": "Risk Adjustment"
+
 
 
     },
@@ -178,7 +185,10 @@ translations = {
         "model_repo_upload_label": "上传您的 IFRS 17 模型（.xlsx）",
         "model_repo_name_label": "模型名称 / 描述",
         "model_repo_success": "✅ 模型上传成功！",
-        "model_repo_none": "📭 当前没有上传的模型。"
+        "model_repo_none": "📭 当前没有上传的模型。",
+        "download_excel_button": "下载 IFRS 17 情景分析 Excel 报告",
+        "scenario": "情景",
+        "risk_adjustment": "风险调整"
 
     },
     "fr": {
@@ -255,7 +265,11 @@ translations = {
         "model_repo_upload_label": "Téléchargez votre modèle IFRS 17 (.xlsx)",
         "model_repo_name_label": "Nom / Description du modèle",
         "model_repo_success": "✅ Modèle téléchargé avec succès !",
-        "model_repo_none": "📭 Aucun modèle n’a encore été téléchargé."
+        "model_repo_none": "📭 Aucun modèle n’a encore été téléchargé.",
+        "download_excel_button": "Télécharger le rapport Excel basé sur des scénarios IFRS 17",
+        "scenario": "Scénario",
+        "risk_adjustment": "Ajustement pour risque"
+
 
     },
     "ar": {
@@ -332,7 +346,12 @@ translations = {
         "model_repo_upload_label": "حمّل نموذج IFRS 17 الخاص بك (.xlsx)",
         "model_repo_name_label": "اسم / وصف النموذج",
         "model_repo_success": "✅ تم تحميل النموذج بنجاح!",
-        "model_repo_none": "📭 لا توجد نماذج مرفوعة حالياً."
+        "model_repo_none": "📭 لا توجد نماذج مرفوعة حالياً.",
+        "download_excel_button": "تحميل تقرير Excel الخاص بسيناريوهات معيار IFRS 17",
+        "scenario": "السيناريو",
+        "risk_adjustment": "تعديل المخاطر"
+
+
 
 
 
@@ -758,7 +777,9 @@ if scenario_file:
 
             scenario_results[name] = {
                 "CSM": csm,
-                "Risk Adjustment": risk_adj
+                "Risk Adjustment": risk_adj,
+                "Discount Rate (%)": discount_rate * 100,
+                "RA (%)": ra_pct * 100
             }
 
 
@@ -899,6 +920,72 @@ if st.button(t["calculate"]):
             coverage_units
         )
 
+def generate_excel_report(scenario_results, lang):
+    import io
+    output = io.BytesIO()
+
+
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        workbook = writer.book
+        worksheet = workbook.add_worksheet("CSM Results")
+        writer.sheets["CSM Results"] = worksheet
+
+        # Define formats
+        bold_format = workbook.add_format({'bold': True, 'font_color': 'black'})
+        currency_format = workbook.add_format({'num_format': '#,##0.00', 'align': 'right'})
+
+        # Write headers
+        headers = ["Scenario", "CSM", "Risk Adjustment"]
+        worksheet.write_row("A1", headers, bold_format)
+
+        # Write data
+        row_idx = 1
+        for scenario, values in scenario_results.items():
+            worksheet.write(row_idx, 0, scenario)
+            worksheet.write_number(row_idx, 1, values["CSM"], currency_format)
+            worksheet.write_number(row_idx, 2, values["Risk Adjustment"], currency_format)
+            row_idx += 1
+
+        # Only add chart if there are values
+        if row_idx > 1:
+            chart = workbook.add_chart({'type': 'column'})
+            chart.add_series({
+                'name':       'CSM',
+                'categories': ['CSM Results', 1, 0, row_idx - 1, 0],
+                'values':     ['CSM Results', 1, 1, row_idx - 1, 1],
+            })
+            chart.set_title({'name': 'CSM by Scenario'})
+            chart.set_x_axis({'name': 'Scenario'})
+            chart.set_y_axis({'name': 'CSM Value'})
+            worksheet.insert_chart('I2', chart)
+        
+        # Insert logo at the top-left corner (cell A1)
+        logo_path = "Icon.png"  # Adjust if your file has a different name
+        if os.path.exists(logo_path):
+            worksheet.insert_image("A13", logo_path, {"x_scale": 0.5, "y_scale": 0.5})
+
+        # Add timestamp and footer
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        footer_text = f"Generated by IFRS 17 CSM App from XL Financial Group on {now}"
+        footer_row = row_idx + 2  # leave one empty row after the table
+        worksheet.merge_range(footer_row, 0, footer_row, 8, footer_text)
+
+
+    output.seek(0)
+    return output.read()
+
+
+
+#Download button
+if st.button(t["download_excel_button"]):  
+    
+        excel_data = generate_excel_report(scenario_results, lang)
+        st.download_button(
+            label=t["download_excel_button"],
+            data=excel_data,
+            file_name="IFRS17_CSM_Report.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
 
 
