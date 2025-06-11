@@ -110,7 +110,41 @@ translations = {
         "job_board": "📌 Featured IFRS 17 Job Postings",
         "apply": "Apply",
         "tab_job_board": "Actuarial Job Board",
-        "tab_ifrs17": "IFRS 17 CSM App"
+        "tab_ifrs17": "IFRS 17 CSM App",
+        "pnl_statement_title": "📈 Projected IFRS 17 Profit & Loss Statement",
+        "tab_pnl_statement": "IFRS 17 Profit & Loss Statement",
+        "insurance_revenue": "Insurance Revenue",
+        "insurance_expense": "Insurance Expense",
+        "net_insurance_result": "Net Insurance Result",
+        "csm_release": "CSM Release",
+        "ra_release": "RA Release",
+        "expected_benefit": "Expected Benefits",
+        "expected_expense": "Expected Expenses",
+        "year": "Year",
+        "actual_claims": "Actual Claims",
+        "actual_expenses": "Actual Expenses",
+        "actual_premiums": "Actual Premiums",
+        "actual_inputs_expander": "Enter Actual Cash Flows (per year)",
+        "balance_sheet_tab": "📊 Balance Sheet",
+        "balance_sheet_title": "Balance Sheet",
+        "csm_balance": "CSM Balance",
+        "ra_balance": "RA Balance",
+        "cash_balance": "Cash Balance",
+        "total_liabilities": "Total Liabilities",
+        "retained_earnings": "Retained Earnings",
+        "total_equity": "Total Equity",
+        "assets_liabilities_check": "Assets = Liabilities + Equity?",
+        "total_assets": "Total Assets",
+        "total_liab_equity": "Total Liabilities + Equities",
+        "pv_future_cf": "PV of Future Cash Flows",
+        "retained_earnings": "Retained Earnings",
+        "total_equity": "Total Equity",
+        "total_assets": "Total Assets",
+        "total_liabilities_equity": "Total Liabilities + Equities",
+        "asset_liability_check": "Asset – (Liab + Equity)",
+        "insurance_finance_expense": "Insurance Finance Income and Expenses"
+
+
 
 
 
@@ -196,7 +230,40 @@ translations = {
         "job_board": "📌 精选 IFRS 17 招聘信息",
         "apply": "申请",
         "tab_job_board": "精算职位看板",
-        "tab_ifrs17": "IFRS 17 CSM 应用"
+        "tab_ifrs17": "IFRS 17 CSM 应用",
+        "pnl_statement_title": "📈 预计 IFRS 17 损益表",
+        "tab_pnl_statement": "IFRS 17 损益表",
+        "insurance_revenue": "保险收入",
+        "insurance_expense": "保险支出",
+        "net_insurance_result": "保险净结果",
+        "csm_release": "CSM 释放",
+        "ra_release": "风险调整释放",
+        "expected_benefit": "预期赔付",
+        "expected_expense": "预期费用",
+        "year": "年度",
+        "actual_claims": "实际赔付",
+        "actual_expenses": "实际费用",
+        "actual_premiums": "实际保费",
+        "actual_inputs_expander": "请提供实际现金流数据",
+        "balance_sheet_tab": "📊 资产负债表",
+        "balance_sheet_title": "资产负债表",
+        "csm_balance": "CSM余额",
+        "ra_balance": "风险调整余额",
+        "cash_balance": "现金余额",
+        "total_liabilities": "总负债",
+        "retained_earnings": "留存收益",
+        "total_equity": "所有者权益总计",
+        "assets_liabilities_check": "资产 = 负债 + 权益 校验",
+        "total_assets": "资产总计",
+        "total_liab_equity": "负债和权益总计",
+        "pv_future_cf": "未来现金流现值",
+        "retained_earnings": "留存收益",
+        "total_equity": "总权益",
+        "total_assets": "资产总额",
+        "total_liabilities_equity": "负债与权益总额",
+        "asset_liability_check": "资产 - (负债 + 权益)",
+        "insurance_finance_expense": "保险财务收入与费用"
+
 
     },
     "fr": {
@@ -280,7 +347,40 @@ translations = {
         "job_board": "📌 Offres d'emploi IFRS 17 en vedette",
         "apply": "Postuler",
         "tab_job_board": "Tableau des Offres Actuarielles",
-        "tab_ifrs17": "Application IFRS 17 CSM"
+        "tab_ifrs17": "Application IFRS 17 CSM",
+        "pnl_statement_title": "📈 Compte de résultat IFRS 17 projeté",
+        "tab_pnl_statement": "Compte de résultat IFRS 17 projeté",
+        "insurance_revenue": "Revenus d'assurance",
+        "insurance_expense": "Dépenses d'assurance",
+        "net_insurance_result": "Résultat net d'assurance",
+        "csm_release": "Libération du CSM",
+        "ra_release": "Libération de l'Ajustement pour Risque",
+        "expected_benefit": "Prestations prévues",
+        "expected_expense": "Dépenses prévues",
+        "year": "Année",
+        "actual_claims": "Sinistres Réels",
+        "actual_expenses": "Dépenses Réelles",
+        "actual_premiums": "primes effectives",
+        "actual_inputs_expander": "saisir les flux de trésorerie réels (par an)",
+        "balance_sheet_tab": "📊 Bilan",
+        "balance_sheet_title": "Bilan",
+        "csm_balance": "Solde du CSM",
+        "ra_balance": "Solde de l'ajustement pour risque",
+        "cash_balance": "Solde de trésorerie",
+        "total_liabilities": "Total du passif",
+        "retained_earnings": "Résultats non distribués",
+        "total_equity": "Total des capitaux propres",
+        "assets_liabilities_check": "Vérification : Actif = Passif + Capitaux propres",
+        "total_assets": "Total de l’actif",
+        "total_liab_equity": "Total des passifs et capitaux propres",
+        "pv_future_cf": "VAN des flux de trésorerie futurs",
+        "retained_earnings": "Résultats non distribués",
+        "total_equity": "Total des capitaux propres",
+        "total_assets": "Total de l’actif",
+        "total_liabilities_equity": "Total passif + capitaux propres",
+        "asset_liability_check": "Actif – (Passif + Capitaux propres)",
+        "insurance_finance_expense": "Produits et charges financiers d'assurance"
+
 
 
     },
@@ -365,7 +465,40 @@ translations = {
         "job_board": "📌 وظائف IFRS 17 المميزة",
         "apply": "تقديم",
         "tab_job_board": "لوحة الوظائف الاكتوارية",
-        "tab_ifrs17": "تطبيق IFRS 17 CSM"
+        "tab_ifrs17": "تطبيق IFRS 17 CSM",
+        "pnl_statement_title": "📈 بيان الأرباح والخسائر المتوقع لـ IFRS 17",
+        "tab_pnl_statement": "بيان الأرباح والخسائر IFRS 17",
+        "insurance_revenue": "إيرادات التأمين",
+        "insurance_expense": "مصاريف التأمين",
+        "net_insurance_result": "صافي نتائج التأمين",
+        "csm_release": "تحرير هامش الخدمة التعاقدي",
+        "ra_release": "تحرير تعديل المخاطر",
+        "expected_benefit": "المدفوعات المتوقعة",
+        "expected_expense": "المصروفات المتوقعة",
+        "year": "السنة",
+        "actual_claims": "المطالبات الفعلية",
+        "actual_expenses": "المصروفات الفعلية",
+        "actual_premiums": "الأقساط الفعلية",
+        "actual_inputs_expander": "أدخل التدفقات النقدية الفعلية (سنويًا)",
+        "balance_sheet_tab": "📊 الميزانية العمومية",
+        "balance_sheet_title": "الميزانية العمومية",
+        "csm_balance": "رصيد هامش الخدمة التعاقدية",
+        "ra_balance": "رصيد التعديل للمخاطر",
+        "cash_balance": "رصيد النقدية",
+        "total_liabilities": "إجمالي الالتزامات",
+        "retained_earnings": "الأرباح المحتجزة",
+        "total_equity": "إجمالي حقوق الملكية",
+        "assets_liabilities_check": "التحقق: الأصول = الالتزامات + حقوق الملكية",
+        "total_assets": "إجمالي الأصول",
+        "total_liab_equity": "إجمالي الالتزامات وحقوق الملكية",
+        "pv_future_cf": "القيمة الحالية للتدفقات النقدية المستقبلية",
+        "retained_earnings": "الأرباح المحتجزة",
+        "total_equity": "إجمالي حقوق الملكية",
+        "total_assets": "إجمالي الأصول",
+        "total_liabilities_equity": "إجمالي الخصوم وحقوق الملكية",
+        "asset_liability_check": "الأصول - (الخصوم + حقوق الملكية)",
+        "insurance_finance_expense": "دخل ومصروف التمويل التأميني"
+
 
 
 
@@ -413,7 +546,7 @@ lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], fo
 t = translations[lang]
 
 #Adding different tabs for different functions
-tab1, tab2 = st.tabs([t["tab_ifrs17"], t["tab_job_board"]])
+tab1, tab2, tab3, tab4 = st.tabs([t["tab_ifrs17"], t["tab_pnl_statement"], t["balance_sheet_tab"], t["tab_job_board"]])
 
 with tab1:
     # Mode toggle
@@ -651,6 +784,28 @@ with tab1:
                 benefits = [float(x) for x in default_benefit.split(",")]
                 expenses = [float(x) for x in default_expense.split(",")]
                 coverage_units = [1] * len(premiums)
+                #input actual cash flows
+                # Actual Premiums Input
+                st.markdown("### " + t["actual_inputs_expander"])
+
+                # Create a DataFrame for user to enter Actuals
+                projection_years = len(premiums)
+                default_actuals = {
+                    t["year"]: list(range(1, projection_years + 1)),
+                    t["actual_premiums"]: [100] * projection_years,
+                    t["actual_claims"]: [30] * projection_years,
+                    t["actual_expenses"]: [10] * projection_years
+                }
+
+                actuals_df = pd.DataFrame(default_actuals)
+
+                edited_df = st.data_editor(actuals_df, use_container_width=True, num_rows="dynamic")
+                # Extract actual cash flow inputs from edited_df
+                actual_premiums = edited_df[t["actual_premiums"]].tolist()
+                actual_claims = edited_df[t["actual_claims"]].tolist()
+                actual_expenses = edited_df[t["actual_expenses"]].tolist()
+    
+                
             else:
                 uploaded_file = st.file_uploader(t["upload"], type=["xlsx"])
 
@@ -858,7 +1013,7 @@ with tab1:
             pv_expenses = sum([e / ((1 + discount_rate) ** i) for i, e in enumerate(expenses)])
             total_pv = pv_benefits + pv_expenses
             risk_adj = total_pv * ra_pct
-            csm = pv_premiums - total_pv - risk_adj
+            csm =  pv_premiums - total_pv - risk_adj
 
             result = {
                 "CSM at Initial Recognition": csm,
@@ -869,16 +1024,17 @@ with tab1:
             st.success(f"✅ Risk Adjustment: {risk_adj:,.2f}")
 
             # Show charts
-            def calculate_csm_dynamic_release(csm_initial, discount_rate, coverage_units):
+            def calculate_csm_dynamic_release(csm_initial, discount_rate, coverage_units, premiums, actual_premiums):
                 num_years = len(coverage_units)
                 csm_balance = []
                 csm_release = []
                 csm_start = csm_initial
-                for t in range(num_years):
+                for i in range(num_years):
                     interest = csm_start * discount_rate
-                    csm_available = csm_start + interest
-                    remaining_units = sum(coverage_units[t:])
-                    proportion = coverage_units[t] / remaining_units if remaining_units > 0 else 0
+                    delta_premium = actual_premiums[i] - premiums[i]
+                    csm_available = csm_start + interest + delta_premium
+                    remaining_units = sum(coverage_units[i:])
+                    proportion = coverage_units[i] / remaining_units if remaining_units > 0 else 0
                     release = csm_available * proportion
                     csm_end = csm_available - release
                     csm_release.append(release)
@@ -891,7 +1047,7 @@ with tab1:
                 if coverage_units is None:
                     coverage_units = [1] * num_years
 
-                csm_release, csm_balance = calculate_csm_dynamic_release(csm_total, discount_rate, coverage_units)
+                csm_release, csm_balance = calculate_csm_dynamic_release(csm_total, discount_rate, coverage_units, premiums, actual_premiums)
                 total_units = sum(coverage_units)
                 ra_release = [risk_adj * (u / total_units) for u in coverage_units]
 
@@ -1111,6 +1267,181 @@ with tab1:
         2. Tap **Add to Home screen**
         """)
 
+with tab2:
+    # --- IFRS 17-Compliant P&L Statement ---
+    st.subheader("📈 " + t["pnl_statement_title"])
+
+    projection_years = len(premiums)
+    pv_premiums = sum([p / ((1 + discount_rate) ** i) for i, p in enumerate(premiums)])
+    pv_benefits = sum([b / ((1 + discount_rate) ** i) for i, b in enumerate(benefits)])
+    pv_expenses = sum([e / ((1 + discount_rate) ** i) for i, e in enumerate(expenses)])
+    total_pv = pv_benefits + pv_expenses
+    risk_adj = total_pv * ra_pct
+    csm = pv_premiums - total_pv - risk_adj
+    ra_release = [risk_adj / projection_years] * projection_years 
+
+    pl_data = []
+    csm_start = csm
+    csm_release = []
+    for i in range(projection_years):
+        interest = csm_start * discount_rate
+        delta_premium = actual_premiums[i] - premiums[i]
+        csm_available = csm_start + interest + delta_premium
+        remaining_units = sum(coverage_units[i:])
+        proportion = coverage_units[i] / remaining_units if remaining_units > 0 else 0
+        release = csm_available * proportion
+        csm_release.append(release)
+        csm_end = csm_available - release
+        csm_start = csm_end
+        expected_benefit = benefits[i]
+        expected_expense = expenses[i]
+        
+        insurance_revenue = csm_release[i] + ra_release[i] + expected_benefit + expected_expense
+
+        actual_benefit = actual_claims[i]  
+        actual_expense = actual_expenses[i]
+        insurance_expense = actual_benefit + actual_expense
+
+        service_result = insurance_revenue - insurance_expense + interest
+
+        pl_data.append({
+            t["csm_release"]: round(csm_release[i], 2),
+            t["ra_release"]: round(ra_release[i], 2),
+            t["expected_benefit"]: round(expected_benefit, 2),
+            t["expected_expense"]: round(expected_expense, 2),
+            t["insurance_revenue"]: round(insurance_revenue, 2),
+            t["actual_claims"]: round(actual_benefit, 2),
+            t["actual_expenses"]: round(actual_expense, 2),
+            t["insurance_expense"]: round(insurance_expense, 2),
+            t["insurance_finance_expense"]: round(interest, 2),
+            t["net_insurance_result"]: round(service_result, 2),
+        })
+
+
+
+
+    pl_df = pd.DataFrame(pl_data).T
+    # Build Markdown table manually
+    markdown_table = "| " + " | ".join(["**" + str(col) + "**" for col in pl_df.columns.insert(0, "Year")]) + " |\n"
+    markdown_table += "| " + " | ".join(["---"] * (len(pl_df.columns) + 1)) + " |\n"
+
+    for idx, (row_label, row_data) in enumerate(pl_df.iterrows()):
+        is_important = row_label in [
+            t["insurance_revenue"],
+            t["insurance_expense"],
+            t["insurance_finance_expense"],
+            t["net_insurance_result"]
+        ]
+        
+        # Insert horizontal lines BEFORE the important rows
+        if row_label == t["insurance_revenue"] or row_label == t["insurance_expense"] or row_label == t["insurance_finance_expense"]:
+            markdown_table += "|---" + "|---" * projection_years + "|\n"
+        elif row_label == t["net_insurance_result"]:
+            markdown_table += "|===" + "|===" * projection_years + "|\n"
+
+        display_label = f"**{row_label}**" if is_important else row_label
+        values = [
+            f"**{v:,.2f}**" if is_important else f"{v:,.2f}"
+            for v in row_data
+        ]
+        row_str = "| " + display_label + " | " + " | ".join(values) + " |\n"
+        markdown_table += row_str
+
+    # Display the markdown table
+    st.markdown(markdown_table)
+
+show_balance_sheet = False 
+
+if show_balance_sheet:
+    # --- BALANCE SHEET ---
+    with tab3:
+        st.subheader("📊 " + t["balance_sheet_title"])
+
+        projection_years = len(premiums)
+
+        # Recalculate or reuse CSM balance
+        csm_release, csm_balance = calculate_csm_dynamic_release(
+            result["CSM at Initial Recognition"], discount_rate, coverage_units, premiums, actual_premiums
+        )
+
+        # Risk Adjustment release and balance
+        total_units = sum(coverage_units)
+        ra_release = [result["Risk Adjustment"] * (u / total_units) for u in coverage_units]
+        ra_balance = []
+        ra_start = result["Risk Adjustment"]
+        for i in range(projection_years):
+            ra_end = ra_start - ra_release[i]
+            ra_balance.append(ra_end)
+            ra_start = ra_end
+
+        # Retained earnings from cumulative net result
+        retained_earnings = []
+        cumulative_result = 0
+        for i in range(projection_years):
+            expected_benefit = benefits[i]
+            expected_expense = expenses[i]
+            insurance_revenue = csm_release[i] + ra_release[i] + expected_benefit + expected_expense
+            insurance_expense = actual_claims[i] + actual_expenses[i]
+            net_result = insurance_revenue - insurance_expense + interest
+            cumulative_result += net_result
+            retained_earnings.append(cumulative_result)
+
+        # Cash balance from actual cash flows
+        cash_balance = []
+        net_cash = 0
+        for i in range(projection_years):
+            net_cash += net_result
+            cash_balance.append(net_cash)
+
+        # Build per-year Balance Sheet records
+        bs_data = {
+            t["year"]: [],
+            t["cash_balance"]: [],
+            t["pv_future_cf"]: [],
+            t["ra_balance"]: [],
+            t["csm_balance"]: [],
+            t["retained_earnings"]: [],
+            t["total_equity"]: [],
+            t["total_assets"]: [],
+            t["total_liab_equity"]: [],
+            t["assets_liabilities_check"]: []
+        }
+
+        for i in range(projection_years):
+            # PV of future CFs from year i
+            pv_premiums_future = sum([premiums[j] / ((1 + discount_rate) ** (j - i - 1))
+                            for j in range(i + 1, projection_years)])
+            pv_benefits_future = sum([benefits[j] / ((1 + discount_rate) ** (j - i - 1))
+                                    for j in range(i + 1, projection_years)])
+            pv_expenses_future = sum([expenses[j] / ((1 + discount_rate) ** (j - i - 1))
+                                    for j in range(i + 1, projection_years)])
+            pv_future_cf = - pv_premiums_future + pv_benefits_future + pv_expenses_future
+
+            csm_liability = csm_balance[i]
+            ra_liab = ra_balance[i]
+            total_liabilities = pv_future_cf + ra_liab + csm_liability
+            equity = retained_earnings[i]
+            total_assets = cash_balance[i]
+            total_liab_equity = total_liabilities + equity
+
+            bs_data[t["year"]].append(i + 1)
+            bs_data[t["cash_balance"]].append(total_assets)
+            bs_data[t["pv_future_cf"]].append(pv_future_cf)
+            bs_data[t["ra_balance"]].append(ra_liab)
+            bs_data[t["csm_balance"]].append(csm_liability)
+            bs_data[t["retained_earnings"]].append(equity)
+            bs_data[t["total_equity"]].append(equity)
+            bs_data[t["total_assets"]].append(total_assets)
+            bs_data[t["total_liab_equity"]].append(total_liab_equity)
+            bs_data[t["assets_liabilities_check"]].append(abs(total_assets - total_liab_equity) < 0.01)
+
+        bs_df = pd.DataFrame(bs_data)
+        st.dataframe(bs_df.style.format(precision=2), use_container_width=True)
+
+
+
+
+
 
 
 
@@ -1137,7 +1468,7 @@ job_listings = [
 
 ]
 
-with tab2:
+with tab4:
     # --- Job Board Section ---
     st.markdown("---")
     st.subheader("💼 " + t["job_board"])
