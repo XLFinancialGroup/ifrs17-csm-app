@@ -142,7 +142,9 @@ translations = {
         "total_assets": "Total Assets",
         "total_liabilities_equity": "Total Liabilities + Equities",
         "asset_liability_check": "Asset – (Liab + Equity)",
-        "insurance_finance_expense": "Insurance Finance Income and Expenses"
+        "insurance_finance_expense": "Insurance Finance Income and Expenses",
+        "current_discount_rate": "Current Discount Rate (%)",
+        "news_tab_title": "📰 IFRS 17 & Actuarial News"
 
 
 
@@ -262,7 +264,9 @@ translations = {
         "total_assets": "资产总额",
         "total_liabilities_equity": "负债与权益总额",
         "asset_liability_check": "资产 - (负债 + 权益)",
-        "insurance_finance_expense": "保险财务收入与费用"
+        "insurance_finance_expense": "保险财务收入与费用",
+        "current_discount_rate": "当前贴现率（%）",
+        "news_tab_title": "📰 IFRS 17 与 精算 新闻"
 
 
     },
@@ -379,7 +383,9 @@ translations = {
         "total_assets": "Total de l’actif",
         "total_liabilities_equity": "Total passif + capitaux propres",
         "asset_liability_check": "Actif – (Passif + Capitaux propres)",
-        "insurance_finance_expense": "Produits et charges financiers d'assurance"
+        "insurance_finance_expense": "Produits et charges financiers d'assurance",
+        "current_discount_rate": "Taux d'actualisation courant (%)",
+        "news_tab_title": "📰 Actualités IFRS 17 & Actuariat"
 
 
 
@@ -497,7 +503,9 @@ translations = {
         "total_assets": "إجمالي الأصول",
         "total_liabilities_equity": "إجمالي الخصوم وحقوق الملكية",
         "asset_liability_check": "الأصول - (الخصوم + حقوق الملكية)",
-        "insurance_finance_expense": "دخل ومصروف التمويل التأميني"
+        "insurance_finance_expense": "دخل ومصروف التمويل التأميني",
+        "current_discount_rate": "معدل الخصم الحالي (%)",
+        "news_tab_title": "📰 أخبار IFRS 17 والخبرة الاكتوارية"
 
 
 
@@ -546,7 +554,7 @@ lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], fo
 t = translations[lang]
 
 #Adding different tabs for different functions
-tab1, tab2, tab3, tab4 = st.tabs([t["tab_ifrs17"], t["tab_pnl_statement"], t["balance_sheet_tab"], t["tab_job_board"]])
+tab1, tab2, tab3, tab4 = st.tabs([t["tab_ifrs17"], t["tab_pnl_statement"], t["tab_job_board"], t["news_tab_title"]])
 
 with tab1:
     # Mode toggle
@@ -746,6 +754,7 @@ with tab1:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
+
     # --- Scenario Excel Template Download
     with st.expander(t["download_scenario_template"]):
         st.download_button(
@@ -805,7 +814,24 @@ with tab1:
                 actual_claims = edited_df[t["actual_claims"]].tolist()
                 actual_expenses = edited_df[t["actual_expenses"]].tolist()
     
-                
+                with st.expander("📉 Enter Current Discount Rates (for IFIE calculation)"):
+                    projection_years = len(premiums)  
+
+                    # Default: use initial discount rate
+                    default_discount_rates = {
+                        t["year"]: list(range(1, projection_years + 1)),
+                        t["current_discount_rate"]: [discount_rate * 100] * projection_years  # As %
+                    }
+
+                    discount_rate_df = pd.DataFrame(default_discount_rates)
+                    edited_discount_rate_df = st.data_editor(discount_rate_df, use_container_width=True, num_rows="fixed")
+                    
+                    # Convert to decimal for calculation
+                    current_discount_rates = [r / 100 for r in edited_discount_rate_df[t["current_discount_rate"]].tolist()]
+
+
+
+
             else:
                 uploaded_file = st.file_uploader(t["upload"], type=["xlsx"])
 
@@ -1003,6 +1029,7 @@ with tab1:
     if show_tutorial:
         st.info(tutorial_text[lang]["step2"])
 
+    result = {}
 
     if st.button(t["calculate"]):
         if None in (premiums, benefits, expenses, coverage_units):
@@ -1049,7 +1076,23 @@ with tab1:
 
                 csm_release, csm_balance = calculate_csm_dynamic_release(csm_total, discount_rate, coverage_units, premiums, actual_premiums)
                 total_units = sum(coverage_units)
-                ra_release = [risk_adj * (u / total_units) for u in coverage_units]
+                # RA release with accretion at current rate
+                ra_release = []
+                ra_balance_csm = []
+                ra_start = result["Risk Adjustment"]
+
+                for i in range(len(coverage_units)):
+                    ra_interest = ra_start * current_discount_rates[i]  # current rate accretion
+                    ra_start += ra_interest
+
+                    portion = coverage_units[i] / total_units if total_units > 0 else 0
+                    release = result["Risk Adjustment"] * portion
+                    ra_release.append(release)
+
+                    ra_end = ra_start - release
+                    ra_balance_csm.append(ra_end)
+                    ra_start = ra_end  # update for next period
+
 
                 if show_tutorial:
                     st.info(tutorial_text[lang]["charts"])
@@ -1271,6 +1314,9 @@ with tab2:
     # --- IFRS 17-Compliant P&L Statement ---
     st.subheader("📈 " + t["pnl_statement_title"])
 
+    # Total units for proportional allocation
+    total_units = sum(coverage_units)
+
     projection_years = len(premiums)
     pv_premiums = sum([p / ((1 + discount_rate) ** i) for i, p in enumerate(premiums)])
     pv_benefits = sum([b / ((1 + discount_rate) ** i) for i, b in enumerate(benefits)])
@@ -1279,6 +1325,33 @@ with tab2:
     risk_adj = total_pv * ra_pct
     csm = pv_premiums - total_pv - risk_adj
     ra_release = [risk_adj / projection_years] * projection_years 
+
+    # --- RA Accretion and Balance using Current Discount Rates ---
+    ra_start = risk_adj
+    ra_accretion = []
+    ra_balance = []
+
+    for i in range(projection_years):
+        current_rate = current_discount_rates[i]
+        accrete_interest = ra_start * current_rate
+        ra_start += accrete_interest
+        ra_release_amt = ra_start * (coverage_units[i] / total_units)
+        ra_end = ra_start - ra_release_amt
+
+        ra_accretion.append(accrete_interest)
+        ra_balance.append(ra_end)
+        ra_start = ra_end
+
+    # --- PVFCF Accretion ---
+    pvfcf_balance = []
+    pv_benefits_expenses = [benefits[i] + expenses[i] for i in range(projection_years)]
+    pvfcf = sum([cf / ((1 + discount_rate) ** i) for i, cf in enumerate(pv_benefits_expenses)])
+
+    for i in range(projection_years):
+        current_rate = current_discount_rates[i]
+        accrete_interest = pvfcf * current_rate
+        pvfcf += accrete_interest - pv_benefits_expenses[i]
+        pvfcf_balance.append(pvfcf)
 
     pl_data = []
     csm_start = csm
@@ -1302,7 +1375,11 @@ with tab2:
         actual_expense = actual_expenses[i]
         insurance_expense = actual_benefit + actual_expense
 
-        service_result = insurance_revenue - insurance_expense + interest
+        ra_interest = ra_accretion[i]
+        pvfcf_interest = pvfcf_balance[i] * current_discount_rates[i]
+        ifie_amount = -interest + ra_interest + pvfcf_interest
+
+        service_result = insurance_revenue - insurance_expense + ifie_amount
 
         pl_data.append({
             t["csm_release"]: round(csm_release[i], 2),
@@ -1313,7 +1390,7 @@ with tab2:
             t["actual_claims"]: round(actual_benefit, 2),
             t["actual_expenses"]: round(actual_expense, 2),
             t["insurance_expense"]: round(insurance_expense, 2),
-            t["insurance_finance_expense"]: round(interest, 2),
+            t["insurance_finance_expense"]: round(ifie_amount, 2),
             t["net_insurance_result"]: round(service_result, 2),
         })
 
@@ -1350,99 +1427,6 @@ with tab2:
     # Display the markdown table
     st.markdown(markdown_table)
 
-show_balance_sheet = False 
-
-if show_balance_sheet:
-    # --- BALANCE SHEET ---
-    with tab3:
-        st.subheader("📊 " + t["balance_sheet_title"])
-
-        projection_years = len(premiums)
-
-        # Recalculate or reuse CSM balance
-        csm_release, csm_balance = calculate_csm_dynamic_release(
-            result["CSM at Initial Recognition"], discount_rate, coverage_units, premiums, actual_premiums
-        )
-
-        # Risk Adjustment release and balance
-        total_units = sum(coverage_units)
-        ra_release = [result["Risk Adjustment"] * (u / total_units) for u in coverage_units]
-        ra_balance = []
-        ra_start = result["Risk Adjustment"]
-        for i in range(projection_years):
-            ra_end = ra_start - ra_release[i]
-            ra_balance.append(ra_end)
-            ra_start = ra_end
-
-        # Retained earnings from cumulative net result
-        retained_earnings = []
-        cumulative_result = 0
-        for i in range(projection_years):
-            expected_benefit = benefits[i]
-            expected_expense = expenses[i]
-            insurance_revenue = csm_release[i] + ra_release[i] + expected_benefit + expected_expense
-            insurance_expense = actual_claims[i] + actual_expenses[i]
-            net_result = insurance_revenue - insurance_expense + interest
-            cumulative_result += net_result
-            retained_earnings.append(cumulative_result)
-
-        # Cash balance from actual cash flows
-        cash_balance = []
-        net_cash = 0
-        for i in range(projection_years):
-            net_cash += net_result
-            cash_balance.append(net_cash)
-
-        # Build per-year Balance Sheet records
-        bs_data = {
-            t["year"]: [],
-            t["cash_balance"]: [],
-            t["pv_future_cf"]: [],
-            t["ra_balance"]: [],
-            t["csm_balance"]: [],
-            t["retained_earnings"]: [],
-            t["total_equity"]: [],
-            t["total_assets"]: [],
-            t["total_liab_equity"]: [],
-            t["assets_liabilities_check"]: []
-        }
-
-        for i in range(projection_years):
-            # PV of future CFs from year i
-            pv_premiums_future = sum([premiums[j] / ((1 + discount_rate) ** (j - i - 1))
-                            for j in range(i + 1, projection_years)])
-            pv_benefits_future = sum([benefits[j] / ((1 + discount_rate) ** (j - i - 1))
-                                    for j in range(i + 1, projection_years)])
-            pv_expenses_future = sum([expenses[j] / ((1 + discount_rate) ** (j - i - 1))
-                                    for j in range(i + 1, projection_years)])
-            pv_future_cf = - pv_premiums_future + pv_benefits_future + pv_expenses_future
-
-            csm_liability = csm_balance[i]
-            ra_liab = ra_balance[i]
-            total_liabilities = pv_future_cf + ra_liab + csm_liability
-            equity = retained_earnings[i]
-            total_assets = cash_balance[i]
-            total_liab_equity = total_liabilities + equity
-
-            bs_data[t["year"]].append(i + 1)
-            bs_data[t["cash_balance"]].append(total_assets)
-            bs_data[t["pv_future_cf"]].append(pv_future_cf)
-            bs_data[t["ra_balance"]].append(ra_liab)
-            bs_data[t["csm_balance"]].append(csm_liability)
-            bs_data[t["retained_earnings"]].append(equity)
-            bs_data[t["total_equity"]].append(equity)
-            bs_data[t["total_assets"]].append(total_assets)
-            bs_data[t["total_liab_equity"]].append(total_liab_equity)
-            bs_data[t["assets_liabilities_check"]].append(abs(total_assets - total_liab_equity) < 0.01)
-
-        bs_df = pd.DataFrame(bs_data)
-        st.dataframe(bs_df.style.format(precision=2), use_container_width=True)
-
-
-
-
-
-
 
 
 #New section for the Job Board
@@ -1468,7 +1452,7 @@ job_listings = [
 
 ]
 
-with tab4:
+with tab3:
     # --- Job Board Section ---
     st.markdown("---")
     st.subheader("💼 " + t["job_board"])
@@ -1495,3 +1479,106 @@ with tab4:
     """, unsafe_allow_html=True)
 
 
+
+# Curated articles
+news_items = [
+    {
+        "title_en": "New IFRS 17 metrics discussion paper aims to improve consistency in financial reporting",
+        "title_zh": "新的 IFRS 17 指标报告旨在提高财务报告一致性",
+        "title_fr": "Un nouveau document sur les indicateurs IFRS 17 vise à améliorer la cohérence des rapports financiers",
+        "title_ar": "ورقة عمل جديدة حول مؤشرات IFRS 17 تهدف إلى تحسين اتساق التقارير المالية",
+        "url": "https://www.ibc.ca/news-insights/in-focus/new-ifrs-17-metrics-discussion-paper-aims-to-improve-consistency-in-financial-reporting?utm_source=chatgpt.com",
+        "date": "2025-06-09"
+    },
+    {
+        "title_en": "Actuaries weigh IFRS 17 impacts on reinsurance market outlook",
+        "title_zh": "精算师评估 IFRS 17 对再保险市场的影响",
+        "title_fr": "Les actuaires évaluent l’impact d’IFRS 17 sur les perspectives du marché de la réassurance",
+        "title_ar": "خبراء الاكتواريون يقيّمون تأثير IFRS 17 على آفاق سوق إعادة التأمين",
+        "url": "https://www.reinsurancenews.com/actuaries-weigh-ifrs17-impact-reinsurance?utm_source=chatgpt.com",
+        "date": "2025-06-06"
+    },
+    {
+        "title_en": "Actuaries Play a Pivotal Role in IFRS 17 Adoption",
+        "title_zh": "精算师在 IFRS 17 采用中发挥关键作用",
+        "title_fr": "Les actuaires jouent un rôle clé dans l’adoption d’IFRS 17",
+        "title_ar": "الخبراء الاكتواريون يلعبون دورًا محوريًا في تطبيق IFRS 17",
+        "url": "https://ar.casact.org/actuaries-play-a-pivotal-role-in-ifrs-17-adoption/",
+        "date": "2024-12-18"
+    },
+    {
+        "title_en": "IFRS 17 Reporting Update – RNA Analytics",
+        "title_zh": "IFRS 17 报告更新 – RNA Analytics",
+        "title_fr": "Mise à jour du reporting IFRS 17 – RNA Analytics",
+        "title_ar": "تحديث تقارير IFRS 17 – RNA Analytics",
+        "url": "https://www.rnaanalytics.com/newsblog/ifrs17",
+        "date": "2025-01-12"
+    },
+    {
+        "title_en": "IFRS 17 Embeds: Year Two Insights from UK Life Insurers",
+        "title_zh": "IFRS 17 深度实施：英国寿险公司第二年见解",
+        "title_fr": "Intégration IFRS 17 : enseignements de la deuxième année des assureurs vie britanniques",
+        "title_ar": "تطبيق IFRS 17: رؤى من السنة الثانية لشركات التأمين على الحياة البريطانية",
+        "url": "https://www.pwc.co.uk/industries/insurance/insights/ifrs-17-embeds-year-two-insights-from-uk-life-insurers.html",
+        "date": "2025-05-31"
+    },
+    {
+        "title_en": "Outlook on Financial and Actuarial Digitalization in the Post‑IFRS 17 Era",
+        "title_zh": "IFRS 17 之后金融与精算数字化展望",
+        "title_fr": "Perspectives de digitalisation financière et actuarielle après IFRS 17",
+        "title_ar": "آفاق الرقمنة المالية والاكتوارية بعد IFRS 17",
+        "url": "https://www.theactuarymagazine.org/outlook-on-financial-and-actuarial-digitalization-in-the-post-ifrs-17-era/",
+        "date": "2025-06-02"
+    },
+    {
+        "title_en": "PwC: Illustrative IFRS 17 Financial Statements 2023",
+        "title_zh": "PwC：2023 年 IFRS 17 财务报表示例",
+        "title_fr": "PwC : États financiers illustratifs IFRS 17 – 2023",
+        "title_ar": "PwC: أمثلة على القوائم المالية وفق IFRS 17 لعام 2023",
+        "url": "https://www.pwc.com/mt/en/publications/insurance/release-of-ifrs-illustrative-financial-statements-2023.html",
+        "date": "2025-01-24"
+    },
+    {
+        "title_en": "PwC Greece: IFRS 17 – Key Publications & Insights",
+        "title_zh": "PwC 希腊：IFRS 17 主要出版物与见解",
+        "title_fr": "PwC Grèce : publications et perspectives clés sur IFRS 17",
+        "title_ar": "PwC اليونان: أهم المنشورات والتحليلات حول IFRS 17",
+        "url": "https://www.pwc.com/gr/en/publications/ifrs17-publications.html",
+        "date": "2025-05-29"
+    },
+    {
+        "title_en": "CAS Research: Actuarial Considerations in IFRS 17 (Asia)",
+        "title_zh": "CAS 研究：IFRS 17（亚洲）中的精算考量",
+        "title_fr": "Étude CAS : considérations actuarielles dans IFRS 17 (Asie)",
+        "title_ar": "دراسة CAS: اعتبارات اكتوارية في IFRS 17 (آسيا)",
+        "url": "https://www.casact.org/sites/default/files/2025-04/CAS_Research-Paper-on-IFRS-17.pdf",
+        "date": "2025-04-01"
+    },
+    {
+        "title_en": "Fitch/RNA: New Analysis on IFRS 17 Reporting Transparency",
+        "title_zh": "Fitch/RNA：IFRS 17 报告透明度新分析",
+        "title_fr": "Fitch/RNA : nouvelle analyse sur la transparence des rapports IFRS 17",
+        "title_ar": "Fitch/RNA: تحليل جديد حول شفافية تقارير IFRS 17",
+        "url": "https://www.rnaanalytics.com/newsblog/ifrs17",
+        "date": "2025-05-25"
+    }
+]
+ 
+
+
+with tab4:
+    st.subheader("📰 " + t["news_tab_title"])
+
+    for article in news_items:
+        localized_title = article.get(f"title_{lang}", article["title_en"])
+        st.markdown(f"- [{localized_title}]({article['url']}) — {article['date']}")
+
+
+
+    st.markdown("***")
+    st.markdown({
+    "en":"*Disclaimer: Contents are for informational purposes only. No professional advice.*",
+    "zh":"*免责声明：内容仅供参考，不构成专业建议。*",
+    "fr":"*Avertissement : contenu à titre informatif uniquement, ne constitue pas un conseil professionnel.*",
+    "ar":"*إخلاء مسؤولية: المحتوى لأغراض المعلومات فقط ولا يعد نصيحة مهنية.*"
+    }[lang])
