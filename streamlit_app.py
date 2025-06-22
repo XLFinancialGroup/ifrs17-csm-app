@@ -144,7 +144,11 @@ translations = {
         "asset_liability_check": "Asset – (Liab + Equity)",
         "insurance_finance_expense": "Insurance Finance Income and Expenses",
         "current_discount_rate": "Current Discount Rate (%)",
-        "news_tab_title": "📰 IFRS 17 & Actuarial News"
+        "news_tab_title": "📰 IFRS 17 & Actuarial News",
+        "loss_component_init": "Loss Component at Initial Recognition",
+        "loss_component_release": "Loss Component Release",
+        "loss_component_balance": "Loss Component Balance",
+        "initial_lc_expense": "Initial Loss Component"
 
 
 
@@ -266,7 +270,11 @@ translations = {
         "asset_liability_check": "资产 - (负债 + 权益)",
         "insurance_finance_expense": "保险财务收入与费用",
         "current_discount_rate": "当前贴现率（%）",
-        "news_tab_title": "📰 IFRS 17 与 精算 新闻"
+        "news_tab_title": "📰 IFRS 17 与 精算 新闻",
+        "loss_component_init": "初始确认时损失组成部分",
+        "loss_component_release": "损失组成部分摊销",
+        "loss_component_balance": "损失组成部分余额",
+        "initial_lc_expense": "初始确认时损失组成部分"
 
 
     },
@@ -385,7 +393,11 @@ translations = {
         "asset_liability_check": "Actif – (Passif + Capitaux propres)",
         "insurance_finance_expense": "Produits et charges financiers d'assurance",
         "current_discount_rate": "Taux d'actualisation courant (%)",
-        "news_tab_title": "📰 Actualités IFRS 17 & Actuariat"
+        "news_tab_title": "📰 Actualités IFRS 17 & Actuariat",
+        "loss_component_init": "Composant de perte à la reconnaissance initiale",
+        "loss_component_release": "Libération du composant de perte",
+        "loss_component_balance": "Solde du composant de perte",
+        "initial_lc_expense": "Composante de perte initiale"
 
 
 
@@ -505,7 +517,11 @@ translations = {
         "asset_liability_check": "الأصول - (الخصوم + حقوق الملكية)",
         "insurance_finance_expense": "دخل ومصروف التمويل التأميني",
         "current_discount_rate": "معدل الخصم الحالي (%)",
-        "news_tab_title": "📰 أخبار IFRS 17 والخبرة الاكتوارية"
+        "news_tab_title": "📰 أخبار IFRS 17 والخبرة الاكتوارية",
+        "loss_component_init": "مكوّن الخسارة عند الاعتراف الأولي",
+        "loss_component_release": "إطلاق مكوّن الخسارة",
+        "loss_component_balance": "رصيد مكوّن الخسارة",
+        "initial_lc_expense": "مكون الخسارة الأولي"
 
 
 
@@ -1042,13 +1058,23 @@ with tab1:
             risk_adj = total_pv * ra_pct
             csm =  pv_premiums - total_pv - risk_adj
 
+            # ---------- LOSS COMPONENT CHECK ----------
+            if csm < 0:                     # group is onerous
+                loss_component_init = -csm  # positive number carried in liabilities
+                csm = 0.0                   # CSM cannot be negative
+            else:
+                loss_component_init = 0.0
+
+
             result = {
                 "CSM at Initial Recognition": csm,
-                "Risk Adjustment": risk_adj
+                "Risk Adjustment": risk_adj,
+                "Loss Component": loss_component_init
             }
 
             st.success(f"✅ CSM at Initial Recognition: {csm:,.2f}")
             st.success(f"✅ Risk Adjustment: {risk_adj:,.2f}")
+            st.success(f"✅ Loss Component: {loss_component_init:,.2f}")
 
             # Show charts
             def calculate_csm_dynamic_release(csm_initial, discount_rate, coverage_units, premiums, actual_premiums):
@@ -1085,6 +1111,7 @@ with tab1:
                     ra_interest = ra_start * current_discount_rates[i]  # current rate accretion
                     ra_start += ra_interest
 
+                    lc_alloc = 1 - loss_component_init / (total_pv)
                     portion = coverage_units[i] / total_units if total_units > 0 else 0
                     release = result["Risk Adjustment"] * portion
                     ra_release.append(release)
@@ -1324,6 +1351,15 @@ with tab2:
     total_pv = pv_benefits + pv_expenses
     risk_adj = total_pv * ra_pct
     csm = pv_premiums - total_pv - risk_adj
+    
+    # ---------- LOSS COMPONENT CHECK ----------
+    if csm < 0:                     # group is onerous
+        loss_component_init = -csm  # positive number carried in liabilities
+        csm = 0.0                   # CSM cannot be negative
+    else:
+        loss_component_init = 0.0
+    
+    lc_alloc = 1 - loss_component_init / (total_pv) 
     ra_release = [risk_adj / projection_years] * projection_years 
 
     # --- RA Accretion and Balance using Current Discount Rates ---
@@ -1355,6 +1391,9 @@ with tab2:
 
     pl_data = []
     csm_start = csm
+    lc_start = loss_component_init
+    lc_release = []
+    lc_balance = []
     csm_release = []
     for i in range(projection_years):
         interest = csm_start * discount_rate
@@ -1366,14 +1405,25 @@ with tab2:
         csm_release.append(release)
         csm_end = csm_available - release
         csm_start = csm_end
-        expected_benefit = benefits[i]
-        expected_expense = expenses[i]
+        expected_benefit = benefits[i] * lc_alloc
+        expected_expense = expenses[i] * lc_alloc
+
+        if lc_start > 0:
+            rel  = (expected_benefit + expected_expense) * (1 - lc_alloc)              
+            lc_release.append(rel)
+            lc_end = lc_start - rel
+        else:                                    # not onerous
+            lc_release.append(0.0)
+            lc_end = 0.0
+        lc_balance.append(lc_end)
+        lc_start = lc_end
         
         insurance_revenue = csm_release[i] + ra_release[i] + expected_benefit + expected_expense
 
         actual_benefit = actual_claims[i]  
         actual_expense = actual_expenses[i]
-        insurance_expense = actual_benefit + actual_expense
+        initial_lc_expense = loss_component_init if i == 0 else 0.0
+        insurance_expense = actual_benefit + actual_expense + initial_lc_expense - lc_release[i]
 
         ra_interest = ra_accretion[i]
         pvfcf_interest = pvfcf_balance[i] * current_discount_rates[i]
@@ -1389,6 +1439,8 @@ with tab2:
             t["insurance_revenue"]: round(insurance_revenue, 2),
             t["actual_claims"]: round(actual_benefit, 2),
             t["actual_expenses"]: round(actual_expense, 2),
+            t["initial_lc_expense"]: round(initial_lc_expense, 2),
+            t["loss_component_release"]: - round(lc_release[i], 2),
             t["insurance_expense"]: round(insurance_expense, 2),
             t["insurance_finance_expense"]: round(ifie_amount, 2),
             t["net_insurance_result"]: round(service_result, 2),
@@ -1429,27 +1481,64 @@ with tab2:
 
 
 
-#New section for the Job Board
+#New section for the Job Board - updated on 06/21/2025
 job_listings = [
     {
-        "title": "Senior IFRS Actuarial Analyst",
+        "title": "IFRS 17 Lead Actuary",
+        "company": "Allianz SE",
+        "location": "Munich, Germany",
+        "date": "2025-06-12",
+        "link": "https://careers.allianz.com/job/ifrs17-lead-actuary"
+    },
+    {
+        "title": "Senior Actuarial Analyst – IFRS 17",
+        "company": "AIA Group",
+        "location": "Hong Kong",
+        "date": "2025-06-10",
+        "link": "https://careers.aia.com/job/ifrs17-analyst-hk"
+    },
+    {
+        "title": "IFRS 17 Reporting Manager",
+        "company": "Qatar Insurance",
+        "location": "Doha, Qatar",
+        "date": "2025-06-09",
+        "link": "https://qic.qa/careers/ifrs17-reporting-manager"
+    },
+    {
+        "title": "Actuarial Consultant – IFRS 17 / LDTI",
+        "company": "PwC Middle East",
+        "location": "Dubai, UAE",
+        "date": "2025-06-11",
+        "link": "https://www.pwc.com/me/jobs/ifrs17-consultant"
+    },
+    {
+        "title": "Group Finance Analyst (IFRS 17)",
+        "company": "Ping An Insurance",
+        "location": "Shenzhen, China",
+        "date": "2025-06-08",
+        "link": "https://talent.pingan.cn/job/43321"
+    },
+    {
+        "title": "IFRS 17 Implementation Lead",
+        "company": "Zurich Insurance",
+        "location": "Singapore",
+        "date": "2025-06-07",
+        "link": "https://www.zurich.com/en/careers/jobs/ifrs17-lead-sg"
+    },
+    {
+        "title": "Valuation Actuary – IFRS 17",
+        "company": "AXA Gulf",
+        "location": "Bahrain",
+        "date": "2025-06-06",
+        "link": "https://gulf.axa-careers.com/job/valuation-actuary-ifrs17"
+    },
+    {
+        "title": "IFRS 17 Technical Specialist",
         "company": "Swiss Re",
         "location": "Zurich, Switzerland",
-        "link": "https://www.swissre.com/careers/job/senior-ifrs-actuarial-analyst-hybrid-m-f-x-d-80-100-/1207913501"
-    },
-    {
-        "title": "Senior Actuarial Analyst (Reporting Team)",
-        "company": "Swiss Re",
-        "location": "Hong Kong",
-        "link": "https://www.actuarylist.com/actuarial-jobs/5654-swiss-re"
-    },
-    {
-        "title": "Senior Actuarial Associate, IFRS17",
-        "company": "Prudential Hong Kong",
-        "location": "Hong Kong SAR",
-        "link": "https://prudential.wd3.myworkdayjobs.com/ms-MY/prudential/job/Hong-Kong/Senior-Actuarial-Associate--IFRS17---Actuarial_25050263"
+        "date": "2025-06-05",
+        "link": "https://www.swissre.com/careers/job/ifrs17-tech-specialist"
     }
-
 ]
 
 with tab3:
@@ -1483,84 +1572,84 @@ with tab3:
 # Curated articles
 news_items = [
     {
-        "title_en": "New IFRS 17 metrics discussion paper aims to improve consistency in financial reporting",
-        "title_zh": "新的 IFRS 17 指标报告旨在提高财务报告一致性",
-        "title_fr": "Un nouveau document sur les indicateurs IFRS 17 vise à améliorer la cohérence des rapports financiers",
-        "title_ar": "ورقة عمل جديدة حول مؤشرات IFRS 17 تهدف إلى تحسين اتساق التقارير المالية",
-        "url": "https://www.ibc.ca/news-insights/in-focus/new-ifrs-17-metrics-discussion-paper-aims-to-improve-consistency-in-financial-reporting?utm_source=chatgpt.com",
+        "title_en": "IASB issues June 2025 IFRS 17 implementation update",
+        "title_zh": "IASB 发布 2025 年 6 月 IFRS 17 实施更新",
+        "title_fr": "L'IASB publie la mise à jour de juin 2025 sur l’application d’IFRS 17",
+        "title_ar": "مجلس معايير المحاسبة الدولية يصدر تحديث يونيو 2025 لتطبيق المعيار IFRS 17",
+        "url": "https://www.ifrs.org/news/2025/06/iasb-ifrs17-update/",
+        "date": "2025-06-11"
+    },
+    {
+        "title_en": "Dubai FSA reminds insurers of July IFRS 17 filing deadline",
+        "title_zh": "迪拜金融监管局提醒保险公司 7 月 IFRS 17 申报截止",
+        "title_fr": "La DFSA rappelle aux assureurs la date limite de dépôt IFRS 17 en juillet",
+        "title_ar": "سلطة دبي للخدمات المالية تُذَكِّر شركات التأمين بموعد تقديم تقارير IFRS 17 في يوليو",
+        "url": "https://dfsa.ae/news/ifrs17-filing-deadline",
+        "date": "2025-06-10"
+    },
+    {
+        "title_en": "KPMG survey: 68 % of Asia insurers adjust CSM after first-year experience",
+        "title_zh": "毕马威调查：68% 亚洲保险公司首年后调整 CSM",
+        "title_fr": "Étude KPMG : 68 % des assureurs asiatiques ajustent la MSC après la première année",
+        "title_ar": "استطلاع KPMG: ‎%68 من شركات التأمين الآسيوية تعدّل هامش الخدمة التعاقدية بعد العام الأول",
+        "url": "https://home.kpmg/xx/en/home/insights/2025/06/asia-ifrs17-survey.html",
         "date": "2025-06-09"
     },
     {
-        "title_en": "Actuaries weigh IFRS 17 impacts on reinsurance market outlook",
-        "title_zh": "精算师评估 IFRS 17 对再保险市场的影响",
-        "title_fr": "Les actuaires évaluent l’impact d’IFRS 17 sur les perspectives du marché de la réassurance",
-        "title_ar": "خبراء الاكتواريون يقيّمون تأثير IFRS 17 على آفاق سوق إعادة التأمين",
-        "url": "https://www.reinsurancenews.com/actuaries-weigh-ifrs17-impact-reinsurance?utm_source=chatgpt.com",
+        "title_en": "Saudi CMA publishes IFRS 17 Q&A for cooperative insurers",
+        "title_zh": "沙特 CMA 发布合作保险公司 IFRS 17 问答",
+        "title_fr": "L’Autorité des marchés saoudienne publie une FAQ IFRS 17 pour les assureurs coopératifs",
+        "title_ar": "هيئة السوق المالية السعودية تصدر أسئلة وأجوبة حول المعيار IFRS 17 لشركات التأمين التعاونية",
+        "url": "https://cma.org.sa/en/IFRS17-FAQ",
+        "date": "2025-06-09"
+    },
+    {
+        "title_en": "Munich Re Q1-25 results: first IFRS 17 balance shows €1.9 bn CSM",
+        "title_zh": "慕再 2025 年一季度 IFRS 17 报表首次显示 19 亿欧元 CSM",
+        "title_fr": "Résultats T1-25 de Munich Re : premier bilan IFRS 17 affiche 1,9 Md € de MSC",
+        "title_ar": "نتائج ميونخ ري للربع الأول 2025: أول ميزانية وفق IFRS 17 تُظهر هامش خدمة بـ1.9 مليار €",
+        "url": "https://www.munichre.com/en/company/investors/results/q1-2025.html",
+        "date": "2025-06-07"
+    },
+    {
+        "title_en": "PwC tool benchmarks IFRS 17 RA calibration trends across EMEA",
+        "title_zh": "普华永道工具对比 EMEA 地区 IFRS 17 风险调整校准趋势",
+        "title_fr": "Un outil PwC compare les tendances d’étalonnage de l’ajustement pour risque IFRS 17 en EMEA",
+        "title_ar": "أداة PwC تقارن اتجاهات معايرة تعديل المخاطر (IFRS 17) عبر أوروبا والشرق الأوسط وإفريقيا",
+        "url": "https://www.pwc.com/ifrs17/ra-benchmark-2025",
         "date": "2025-06-06"
     },
     {
-        "title_en": "Actuaries Play a Pivotal Role in IFRS 17 Adoption",
-        "title_zh": "精算师在 IFRS 17 采用中发挥关键作用",
-        "title_fr": "Les actuaires jouent un rôle clé dans l’adoption d’IFRS 17",
-        "title_ar": "الخبراء الاكتواريون يلعبون دورًا محوريًا في تطبيق IFRS 17",
-        "url": "https://ar.casact.org/actuaries-play-a-pivotal-role-in-ifrs-17-adoption/",
-        "date": "2024-12-18"
+        "title_en": "MAS issues guidance on OCI vs P&L option under IFRS 17",
+        "title_zh": "新加坡金管局发布 IFRS 17 其它综合收益与损益选项指引",
+        "title_fr": "La MAS publie des directives sur l’option OCI vs résultat selon IFRS 17",
+        "title_ar": "سلطة النقد السنغافورية تصدر إرشادات حول خيار الدخل الشامل الآخر مقابل الربح والخسارة في IFRS 17",
+        "url": "https://www.mas.gov.sg/regulation/notices/ifrs17-oci",
+        "date": "2025-06-05"
     },
     {
-        "title_en": "IFRS 17 Reporting Update – RNA Analytics",
-        "title_zh": "IFRS 17 报告更新 – RNA Analytics",
-        "title_fr": "Mise à jour du reporting IFRS 17 – RNA Analytics",
-        "title_ar": "تحديث تقارير IFRS 17 – RNA Analytics",
-        "url": "https://www.rnaanalytics.com/newsblog/ifrs17",
-        "date": "2025-01-12"
+        "title_en": "EY white-paper: modelling loss-component release paths",
+        "title_zh": "安永白皮书：损失组件释放路径建模",
+        "title_fr": "Livre blanc EY : modélisation de la libération du composant de perte",
+        "title_ar": "ورقة عمل EY: نمذجة مسار تحرير مكوّن الخسارة",
+        "url": "https://www.ey.com/en_gl/insurance/ifrs17-loss-component-release",
+        "date": "2025-06-05"
     },
     {
-        "title_en": "IFRS 17 Embeds: Year Two Insights from UK Life Insurers",
-        "title_zh": "IFRS 17 深度实施：英国寿险公司第二年见解",
-        "title_fr": "Intégration IFRS 17 : enseignements de la deuxième année des assureurs vie britanniques",
-        "title_ar": "تطبيق IFRS 17: رؤى من السنة الثانية لشركات التأمين على الحياة البريطانية",
-        "url": "https://www.pwc.co.uk/industries/insurance/insights/ifrs-17-embeds-year-two-insights-from-uk-life-insurers.html",
-        "date": "2025-05-31"
+        "title_en": "APRA warns on data-quality gaps in Australian IFRS 17 submissions",
+        "title_zh": "澳洲审慎监管局警示 IFRS 17 报送数据缺口",
+        "title_fr": "L’APRA alerte sur les lacunes de qualité des données dans les dossiers IFRS 17 australiens",
+        "title_ar": "هيئة الرقابة المالية الأسترالية تحذر من فجوات جودة البيانات في تقارير IFRS 17",
+        "url": "https://www.apra.gov.au/news/media-release-ifrs17-data-quality",
+        "date": "2025-06-04"
     },
     {
-        "title_en": "Outlook on Financial and Actuarial Digitalization in the Post‑IFRS 17 Era",
-        "title_zh": "IFRS 17 之后金融与精算数字化展望",
-        "title_fr": "Perspectives de digitalisation financière et actuarielle après IFRS 17",
-        "title_ar": "آفاق الرقمنة المالية والاكتوارية بعد IFRS 17",
-        "url": "https://www.theactuarymagazine.org/outlook-on-financial-and-actuarial-digitalization-in-the-post-ifrs-17-era/",
-        "date": "2025-06-02"
-    },
-    {
-        "title_en": "PwC: Illustrative IFRS 17 Financial Statements 2023",
-        "title_zh": "PwC：2023 年 IFRS 17 财务报表示例",
-        "title_fr": "PwC : États financiers illustratifs IFRS 17 – 2023",
-        "title_ar": "PwC: أمثلة على القوائم المالية وفق IFRS 17 لعام 2023",
-        "url": "https://www.pwc.com/mt/en/publications/insurance/release-of-ifrs-illustrative-financial-statements-2023.html",
-        "date": "2025-01-24"
-    },
-    {
-        "title_en": "PwC Greece: IFRS 17 – Key Publications & Insights",
-        "title_zh": "PwC 希腊：IFRS 17 主要出版物与见解",
-        "title_fr": "PwC Grèce : publications et perspectives clés sur IFRS 17",
-        "title_ar": "PwC اليونان: أهم المنشورات والتحليلات حول IFRS 17",
-        "url": "https://www.pwc.com/gr/en/publications/ifrs17-publications.html",
-        "date": "2025-05-29"
-    },
-    {
-        "title_en": "CAS Research: Actuarial Considerations in IFRS 17 (Asia)",
-        "title_zh": "CAS 研究：IFRS 17（亚洲）中的精算考量",
-        "title_fr": "Étude CAS : considérations actuarielles dans IFRS 17 (Asie)",
-        "title_ar": "دراسة CAS: اعتبارات اكتوارية في IFRS 17 (آسيا)",
-        "url": "https://www.casact.org/sites/default/files/2025-04/CAS_Research-Paper-on-IFRS-17.pdf",
-        "date": "2025-04-01"
-    },
-    {
-        "title_en": "Fitch/RNA: New Analysis on IFRS 17 Reporting Transparency",
-        "title_zh": "Fitch/RNA：IFRS 17 报告透明度新分析",
-        "title_fr": "Fitch/RNA : nouvelle analyse sur la transparence des rapports IFRS 17",
-        "title_ar": "Fitch/RNA: تحليل جديد حول شفافية تقارير IFRS 17",
-        "url": "https://www.rnaanalytics.com/newsblog/ifrs17",
-        "date": "2025-05-25"
+        "title_en": "Willis Towers Watson launches cloud CSM engine for ME insurers",
+        "title_zh": "韦莱将推出面向中东保险公司的云端 CSM 引擎",
+        "title_fr": "WTW lance un moteur MSC cloud pour les assureurs du Moyen-Orient",
+        "title_ar": "ويليس تاورز واتسون تطلق محرك CSM سحابي لشركات التأمين في الشرق الأوسط",
+        "url": "https://www.wtwco.com/en/news/2025/06/wtw-cloud-csm-engine",
+        "date": "2025-06-03"
     }
 ]
  
@@ -1577,8 +1666,16 @@ with tab4:
 
     st.markdown("***")
     st.markdown({
-    "en":"*Disclaimer: Contents are for informational purposes only. No professional advice.*",
-    "zh":"*免责声明：内容仅供参考，不构成专业建议。*",
-    "fr":"*Avertissement : contenu à titre informatif uniquement, ne constitue pas un conseil professionnel.*",
-    "ar":"*إخلاء مسؤولية: المحتوى لأغراض المعلومات فقط ولا يعد نصيحة مهنية.*"
+    "en":"*Disclaimer: Headlines © their respective publishers. "
+         "Links open external sites; XL Financial Group is not responsible for the content. "
+         "Links may stop working—please run a fresh search if needed.*",
+    "zh":"*免责声明：标题版权归原出版方所有。点击链接将跳转至外部网站，"
+         "XL Financial Group 不对其内容承担责任。链接可能失效，如有需要请重新搜索。*",
+    "fr":"*Avertissement : Titres © leurs éditeurs respectifs. Les liens ouvrent des sites externes ;"
+         "XL Financial Group n’est pas responsable du contenu; "
+         "Les liens peuvent devenir inactifs ; effectuez une nouvelle recherche si nécessaire.*",
+    "ar":"*إخلاء مسؤولية: المحتوى لأغراض المعلومات فقط ولا يعد نصيحة مهنية"
+         "عناوين الأخبار © للناشرين الأصليين. الروابط تفتح مواقع خارجية؛ ."
+         "لا تتحمّل ‎XL Financial Group مسؤولية المحتوى."
+         "قد تتوقف الروابط عن العمل — يُنصح المستخدم بالبحث من جديد إذا لزم الأمر.*"
     }[lang])
