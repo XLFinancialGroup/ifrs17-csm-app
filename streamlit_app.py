@@ -148,7 +148,30 @@ translations = {
         "loss_component_init": "Loss Component at Initial Recognition",
         "loss_component_release": "Loss Component Release",
         "loss_component_balance": "Loss Component Balance",
-        "initial_lc_expense": "Initial Loss Component"
+        "initial_lc_expense": "Initial Loss Component",
+        "assump_change_expander": "Assumption update (prospective)",
+        "assump_change_start":    "Apply changes from Year …",
+        "benefit_change_pct":     "Δ Expected Benefits (%)",
+        "expense_change_pct":     "Δ Expected Expenses (%)",
+        "ra_new_pct":             "New Risk-Adjustment (%)",
+        "assump_change_loss":     "Loss-component increase",
+        "assump_change_gain":     "Loss-component release",
+        "tab_paa": "PAA (Simplified)",
+        "paa_title": "📘 IFRS 17 PAA Calculator",
+        "coverage_period": "Coverage period (years)",
+        "total_gwp": "Total written premium",
+        "earned_premium_pattern": "Revenue pattern",
+        "pattern_even": "Even (straight-line)",
+        "pattern_front": "Front-loaded",
+        "pattern_back": "Back-loaded",
+        "expected_claim_ratio": "Ultimate loss ratio (%)",
+        "onerous_check": "Run onerous test?",
+        "lrc_init": "Initial LRC",
+        "lic_init": "Initial LIC (zero → no incurred claims)",
+        "revenue": "Insurance revenue",
+        "claims_incurred": "Claims incurred",
+        "exp_recognised": "Insurance service expenses",
+        "net_result": "Insurance service result"
 
 
 
@@ -274,7 +297,30 @@ translations = {
         "loss_component_init": "初始确认时损失组成部分",
         "loss_component_release": "损失组成部分摊销",
         "loss_component_balance": "损失组成部分余额",
-        "initial_lc_expense": "初始确认时损失组成部分"
+        "initial_lc_expense": "初始确认时损失组成部分",
+        "assump_change_expander": "假设更新（未来情景）",
+        "assump_change_start":    "从第几年开始应用变动",
+        "benefit_change_pct":     "预期赔付变化 (%)",
+        "expense_change_pct":     "预期费用变化 (%)",
+        "ra_new_pct":             "新的风险调整 (%)",
+        "assump_change_loss":     "损失组成部分增加",
+        "assump_change_gain":     "损失组成部分释放",
+        "tab_paa": "PAA（简化法）",
+        "paa_title": "📘 IFRS 17 PAA 计算器",
+        "coverage_period": "保障期限（年）",
+        "total_gwp": "总签单保费",
+        "earned_premium_pattern": "收入摊销模式",
+        "pattern_even": "平均（直线法）",
+        "pattern_front": "前端加速",
+        "pattern_back": "后端加速",
+        "expected_claim_ratio": "预计赔付率 (%)",
+        "onerous_check": "执行亏损测试？",
+        "lrc_init": "期初 LRC",
+        "lic_init": "期初 LIC（0＝无已发生赔付）",
+        "revenue": "保险收入",
+        "claims_incurred": "已发生赔款",
+        "exp_recognised": "保险服务支出",
+        "net_result": "保险服务结果"
 
 
     },
@@ -397,7 +443,30 @@ translations = {
         "loss_component_init": "Composant de perte à la reconnaissance initiale",
         "loss_component_release": "Libération du composant de perte",
         "loss_component_balance": "Solde du composant de perte",
-        "initial_lc_expense": "Composante de perte initiale"
+        "initial_lc_expense": "Composante de perte initiale",
+        "assump_change_expander": "Mise à jour des hypothèses (prospective)",
+        "assump_change_start":    "Appliquer les changements à partir de l’année …",
+        "benefit_change_pct":     "Δ Prestations prévues (%)",
+        "expense_change_pct":     "Δ Dépenses prévues (%)",
+        "ra_new_pct":             "Nouvel ajustement pour risque (%)",
+        "assump_change_loss":     "Augmentation du composant de perte",
+        "assump_change_gain":     "Libération du composant de perte",
+        "tab_paa": "PAA (Simplifié)",
+        "paa_title": "📘 Calculateur PAA IFRS 17",
+        "coverage_period": "Période de couverture (années)",
+        "total_gwp": "Prime émise totale",
+        "earned_premium_pattern": "Profil de reconnaissance du revenu",
+        "pattern_even": "Linéaire",
+        "pattern_front": "Chargé en début",
+        "pattern_back": "Chargé en fin",
+        "expected_claim_ratio": "Taux de sinistralité ultime (%)",
+        "onerous_check": "Effectuer le test d’onérosité ?",
+        "lrc_init": "LRC initiale",
+        "lic_init": "LIC initiale (zéro → aucun sinistre encouru)",
+        "revenue": "Revenus d’assurance",
+        "claims_incurred": "Sinistres encourus",
+        "exp_recognised": "Dépenses de service d’assurance",
+        "net_result": "Résultat du service d’assurance"
 
 
 
@@ -521,7 +590,30 @@ translations = {
         "loss_component_init": "مكوّن الخسارة عند الاعتراف الأولي",
         "loss_component_release": "إطلاق مكوّن الخسارة",
         "loss_component_balance": "رصيد مكوّن الخسارة",
-        "initial_lc_expense": "مكون الخسارة الأولي"
+        "initial_lc_expense": "مكون الخسارة الأولي",
+        "assump_change_expander": "تحديث الفرضيات (مستقبلي)",
+        "assump_change_start":    "تطبيق التغييرات ابتداءً من السنة …",
+        "benefit_change_pct":     "تغيّر المنافع المتوقعة (%)",
+        "expense_change_pct":     "تغيّر المصروفات المتوقعة (%)",
+        "ra_new_pct":             "نسبة تعديل المخاطر الجديدة (%)",
+        "assump_change_loss":     "زيادة مكوّن الخسارة",
+        "assump_change_gain":     "تحرير مكوّن الخسارة",
+        "tab_paa": "طريقة PAA (المبسطة)",
+        "paa_title": "📘 حاسبة PAA لمعيار IFRS 17",
+        "coverage_period": "فترة التغطية (بالسنوات)",
+        "total_gwp": "إجمالي الأقساط المكتتبة",
+        "earned_premium_pattern": "نمط الاعتراف بالإيراد",
+        "pattern_even": "مستقيم (متساوٍ)",
+        "pattern_front": "محمل مقدماً",
+        "pattern_back": "محمل مؤخراً",
+        "expected_claim_ratio": "نسبة الخسارة المتوقعة (%)",
+        "onerous_check": "تنفيذ اختبار العجز؟",
+        "lrc_init": "رصيد LRC الافتتاحي",
+        "lic_init": "رصيد LIC الافتتاحي (صفر = لا مطالبات متكبدة)",
+        "revenue": "إيرادات التأمين",
+        "claims_incurred": "المطالبات المتكبدة",
+        "exp_recognised": "مصاريف خدمة التأمين",
+        "net_result": "نتيجة خدمة التأمين"
 
 
 
@@ -570,7 +662,7 @@ lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], fo
 t = translations[lang]
 
 #Adding different tabs for different functions
-tab1, tab2, tab3, tab4 = st.tabs([t["tab_ifrs17"], t["tab_pnl_statement"], t["tab_job_board"], t["news_tab_title"]])
+tab1, tab2, tab3, tab4, tab5 = st.tabs([t["tab_ifrs17"], t["tab_pnl_statement"], t["tab_job_board"], t["news_tab_title"], t["tab_paa"]])
 
 with tab1:
     # Mode toggle
@@ -829,7 +921,26 @@ with tab1:
                 actual_premiums = edited_df[t["actual_premiums"]].tolist()
                 actual_claims = edited_df[t["actual_claims"]].tolist()
                 actual_expenses = edited_df[t["actual_expenses"]].tolist()
-    
+
+                # Included another section to introduce assumption changes on non-financial assumptions    
+                with st.expander("🛠️  " + t["assump_change_expander"]):
+                    change_year = st.number_input(
+                        t["assump_change_start"], min_value=1,
+                        max_value=len(premiums), value=len(premiums)//2
+                    )
+
+                    benefit_factor = st.number_input(
+                        t["benefit_change_pct"], value=0.0, step=0.01
+                    ) / 100
+
+                    expense_factor = st.number_input(
+                        t["expense_change_pct"], value=0.0, step=0.01
+                    ) / 100
+
+                    ra_new_pct = st.number_input(
+                        t["ra_new_pct"], value=ra_pct*100, step=0.1
+                    ) / 100
+
                 with st.expander("📉 Enter Current Discount Rates (for IFIE calculation)"):
                     projection_years = len(premiums)  
 
@@ -1047,6 +1158,9 @@ with tab1:
 
     result = {}
 
+    # --- inside Tab-1, just after you build `result = {...}` and show the success messages
+    st.session_state["csm_ready"] = True        # <-- add this single line
+
     if st.button(t["calculate"]):
         if None in (premiums, benefits, expenses, coverage_units):
             st.error("Missing inputs. Please provide all required fields.")
@@ -1076,31 +1190,192 @@ with tab1:
             st.success(f"✅ Risk Adjustment: {risk_adj:,.2f}")
             st.success(f"✅ Loss Component: {loss_component_init:,.2f}")
 
-            # Show charts
-            def calculate_csm_dynamic_release(csm_initial, discount_rate, coverage_units, premiums, actual_premiums):
-                num_years = len(coverage_units)
-                csm_balance = []
-                csm_release = []
-                csm_start = csm_initial
-                for i in range(num_years):
-                    interest = csm_start * discount_rate
-                    delta_premium = actual_premiums[i] - premiums[i]
-                    csm_available = csm_start + interest + delta_premium
-                    remaining_units = sum(coverage_units[i:])
-                    proportion = coverage_units[i] / remaining_units if remaining_units > 0 else 0
-                    release = csm_available * proportion
-                    csm_end = csm_available - release
-                    csm_release.append(release)
-                    csm_balance.append(csm_end)
-                    csm_start = csm_end
-                return csm_release, csm_balance
+            # Calculate the impact of change in non-financial assumptions
+            def recalc_delta_future_cf(i_start):
+                """
+                Change in PV of future benefits+expenses and RA from year i_start onward,
+                using the user-entered assumption shifts.
+                """
+                ben_new = benefits.copy()
+                exp_new = expenses.copy()
 
-            def show_csm_chart(csm_total, premiums, benefits, expenses, risk_adj, num_years, discount_rate, coverage_units, show_tutorial=False):
+                for j in range(i_start, len(benefits)):
+                    ben_new[j] *= (1 + benefit_factor)
+                    exp_new[j] *= (1 + expense_factor)
+
+                def pv(arr):
+                    return sum(x / ((1 + discount_rate) ** k)
+                            for k, x in enumerate(arr[i_start:], start=0))
+
+                pv_old = pv([benefits[k] + expenses[k] for k in range(i_start, len(benefits))])
+                pv_new = pv([ben_new[k] + exp_new[k]   for k in range(i_start, len(benefits))])
+
+                delta_pv = pv_new - pv_old
+                delta_ra = delta_pv * ra_new_pct - pv_old * ra_pct
+                return delta_pv, delta_ra, ben_new, exp_new
+
+            # ---------------------------------------------------------------
+            
+            # --------------------------------------------------------------------
+            #  Build “new” assumption arrays directly from the user-entered shifts
+            # --------------------------------------------------------------------
+            projection_years = len(benefits)
+
+            # 2-a  Benefits & Expenses after the change _____________
+            new_benefits = [b * (1 + benefit_factor) if benefit_factor else b
+                            for b in benefits]
+            new_expenses = [e * (1 + expense_factor) if expense_factor else e
+                            for e in expenses]
+
+            # 2-b  Risk-adjustment percentage after the change ______
+            new_ra_pct   = [ra_new_pct] * projection_years      # same % each year
+            
+            #  Δ-tables coming from the user
+            benefit_deltas   = [new_benefits[i]  - benefits[i]  for i in range(projection_years)]
+            expense_deltas   = [new_expenses[i]  - expenses[i]  for i in range(projection_years)]
+            ra_pct_deltas    = [new_ra_pct[i]    - ra_pct       for i in range(projection_years)]
+
+            # Convert the RA-% change into a *currency* amount that affects CSM
+            ra_future        = risk_adj                            # opening RA (future service)
+            ra_delta_amounts = []
+            for i in range(projection_years):
+                # Adjust RA for the changed % (simplified – same base all years)
+                new_ra_amt      = ra_future * (1 + ra_pct_deltas[i])
+                delta_ra_amt    = new_ra_amt - ra_future
+                ra_delta_amounts.append(delta_ra_amt)
+                ra_future       = new_ra_amt                       # roll forward
+
+            # FINAL list consumed by the CSM engine
+            assump_deltas = [
+                    -(benefit_deltas[i] + expense_deltas[i])      # PV of CF change (opposite sign)
+                    - ra_delta_amounts[i]                         # RA change for future service
+                    for i in range(projection_years)
+            ]
+            # ---------------------------------------------------------------
+
+            #For the chart
+            # -----------------------------------------------------------------
+            def calculate_csm_from_pl(csm_opening,
+                                    discount_rate,
+                                    coverage_units,
+                                    premiums,
+                                    actual_premiums,
+                                    assump_deltas):
+                """
+                Returns two equal-length lists:
+                    csm_release[i]   – amount recognised in year i+1
+                    csm_balance[i]   – closing balance at end of year i+1
+                It mirrors the logic used in Tab 2 (P&L).
+                """
+                num_years   = len(coverage_units)
+                rel, bal    = [], []
+                csm_start   = csm_opening
+
+                for i in range(num_years):
+                    interest        = csm_start * discount_rate
+                    delta_premium   = actual_premiums[i] - premiums[i]
+                    delta_assump    = assump_deltas[i]          # ← NEW piece
+                    csm_available   = csm_start + interest + delta_premium + delta_assump
+
+                    remaining_units = sum(coverage_units[i:])
+                    share           = coverage_units[i] / remaining_units if remaining_units else 0
+                    release         = csm_available * share
+
+                    csm_end         = csm_available - release
+
+                    rel.append(release)
+                    bal.append(csm_end)
+                    csm_start       = csm_end
+
+                return rel, bal
+            # -----------------------------------------------------------------
+
+            # ----------------------------------------------------------------------
+            def apply_future_assumption_shifts(start_i: int,
+                                            ben: list[float],
+                                            exp: list[float],
+                                            ra_init: float) -> tuple[list[float],
+                                                                        list[float],
+                                                                        float]:
+                """
+                Return (benefits_adj, expenses_adj, ra_adj) *after* applying
+                user-specified % shocks from index start_i onward (0-based).
+                """
+                # clone so we don't mutate originals
+                ben_new = ben.copy()
+                exp_new = exp.copy()
+
+                for j in range(start_i, len(ben)):
+                    ben_new[j] *= (1 + benefit_factor)
+                    exp_new[j] *= (1 + expense_factor)
+
+                # RA at initial recognition was 'ra_init' (= total_pv * ra_pct)
+                total_pv_old = sum(b + e for b, e in zip(ben, exp))
+                total_pv_new = sum(b + e for b, e in zip(ben_new, exp_new))
+                ra_new_full  = total_pv_new * ra_new_pct
+
+                return ben_new, exp_new, ra_new_full
+            # ----------------------------------------------------------------------
+
+
+            # ----------------------------------------------------------------------
+
+            # Show charts
+            # don't need this anymore
+            #def calculate_csm_dynamic_release(csm_initial, discount_rate, coverage_units, premiums, actual_premiums, assump_deltas):
+            #    num_years = len(coverage_units)
+            #    csm_balance = []
+            #    csm_release = []
+            #    csm_start = csm_initial
+            #    for i in range(num_years):
+            #        interest = csm_start * discount_rate
+            #        delta_premium = actual_premiums[i] - premiums[i]
+            #        delta_assump = assump_deltas[i]
+            #        csm_available = csm_start + interest + delta_premium + delta_assump
+            #        remaining_units = sum(coverage_units[i:])
+            #        proportion = coverage_units[i] / remaining_units if remaining_units > 0 else 0
+            #        release = csm_available * proportion
+            #        csm_end = csm_available - release
+            #        csm_release.append(release)
+            #        csm_balance.append(csm_end)
+            #        csm_start = csm_end
+            #    return csm_release, csm_balance
+
+            # ----- non-financial assumption change year -------------------------
+            assump_change_year = st.number_input(
+                "Year in which new assumptions start (1 = first projection year)",
+                min_value=1,
+                max_value=len(premiums),
+                value=1,
+                step=1
+            )
+
+
+            def show_csm_chart(csm_total, premiums, benefits, expenses, risk_adj, num_years, discount_rate, coverage_units, assump_change_year, benefit_factor, expense_factor, ra_new_pct, loss_component_init, show_tutorial=False):
                 years = list(range(1, num_years + 1))
                 if coverage_units is None:
                     coverage_units = [1] * num_years
 
-                csm_release, csm_balance = calculate_csm_dynamic_release(csm_total, discount_rate, coverage_units, premiums, actual_premiums)
+                # ❶ Apply assumption change from the chosen year (1-based → 0-based index)
+                idx_change   = assump_change_year - 1
+                benefits_adj, expenses_adj, ra_adj = apply_future_assumption_shifts(
+                    idx_change, benefits, expenses, risk_adj)
+
+                # ❷ Re-compute CSM *prospectively* at the change date
+                pv_ben_old = sum( benefits[i] / ((1+discount_rate)**i) for i in range(idx_change, num_years) )
+                pv_exp_old = sum( expenses[i] / ((1+discount_rate)**i) for i in range(idx_change, num_years) )
+                pv_ben_new = sum( benefits_adj[i] / ((1+discount_rate)**i) for i in range(idx_change, num_years) )
+                pv_exp_new = sum( expenses_adj[i] / ((1+discount_rate)**i) for i in range(idx_change, num_years) )
+
+                delta_pv   = (pv_ben_new + pv_exp_new) - (pv_ben_old + pv_exp_old)
+                delta_ra   = ra_adj - risk_adj        # positive if RA% increased
+
+                csm_total  = csm_total - delta_pv - delta_ra   # IFRS 17 para B96(b)
+
+                # ❸ Now run the *existing* dynamic-release engine on the adjusted inputs
+                csm_release, csm_balance = calculate_csm_from_pl(
+                    csm_total, discount_rate, coverage_units, premiums, actual_premiums, assump_deltas
+                )
                 total_units = sum(coverage_units)
                 # RA release with accretion at current rate
                 ra_release = []
@@ -1129,6 +1404,9 @@ with tab1:
                 fig1, ax1 = plt.subplots(figsize=(10, 4))
                 ax1.plot(years, csm_release, label="CSM Release", marker="o")
                 ax1.plot(years, csm_balance, label="CSM Balance (EOP)", marker="o", linestyle="--")
+                for x, y in zip(years, csm_balance):
+                    ax1.annotate(f"{y:,.0f}", xy=(x, y), xytext=(0, 8),
+                                textcoords="offset points", ha="center", fontsize=9)
                 ax1.set_xlabel("Year")
                 ax1.set_ylabel("Amount")
                 ax1.set_title("CSM Release and Balance")
@@ -1158,6 +1436,8 @@ with tab1:
                 ax3.grid(True)
                 st.pyplot(fig3)
 
+            assump_deltas = [0.0] * len(premiums)
+
             show_csm_chart(
                 result["CSM at Initial Recognition"],
                 premiums,
@@ -1166,7 +1446,12 @@ with tab1:
                 result["Risk Adjustment"],
                 len(premiums),
                 discount_rate,
-                coverage_units
+                coverage_units,
+                assump_change_year,     
+                benefit_factor,
+                expense_factor,
+                ra_new_pct,
+                loss_component_init
             )
 
     def generate_excel_report(scenario_results, lang):
@@ -1338,6 +1623,11 @@ with tab1:
         """)
 
 with tab2:
+
+    if not st.session_state.get("csm_ready"):
+        st.info("↖️ Run the calculation in the CSM tab first, then come back here.")
+        st.stop()          # nothing below will execute until the flag is set
+
     # --- IFRS 17-Compliant P&L Statement ---
     st.subheader("📈 " + t["pnl_statement_title"])
 
@@ -1391,61 +1681,85 @@ with tab2:
 
     pl_data = []
     csm_start = csm
-    lc_start = loss_component_init
-    lc_release = []
-    lc_balance = []
-    csm_release = []
+    lc_start  = max(-csm_start, 0)        # initial Loss Component (if onerous)
+    lc_balance = lc_start
+
     for i in range(projection_years):
-        interest = csm_start * discount_rate
-        delta_premium = actual_premiums[i] - premiums[i]
-        csm_available = csm_start + interest + delta_premium
+        # ---- 3·1  Interest on opening CSM
+        csm_int = csm_start * discount_rate
+
+        # ---- 3·2  Premium variance already in your code
+        delta_prem = actual_premiums[i] - premiums[i]
+
+        # ---- 3·3  Assumption change kicks in?
+        if i + 1 == change_year:
+            Δpv, Δra, benefits, expenses = recalc_delta_future_cf(i)
+            ra_pct = ra_new_pct                    # store new % for future years
+        else:
+            Δpv = Δra = 0
+
+        # ---- 3·4  Absorb Δ’s into CSM or Loss Component
+        adjust_CSM = -(Δpv + Δra)                 # sign convention
+        if csm_start + csm_int + delta_prem >= adjust_CSM >= 0:
+            csm_after_adj = csm_start + csm_int + delta_prem - adjust_CSM
+            lc_release = 0
+            lc_increase = 0
+        else:
+            # insufficient CSM – create / add to Loss Component
+            deficiency = adjust_CSM - (csm_start + csm_int + delta_prem)
+            csm_after_adj = 0
+            lc_increase   = deficiency
+            lc_release    = 0
+
+        # if CSM > 0 and LC exists, favourable Δ first reverses LC
+        if lc_balance > 0 and adjust_CSM < 0:
+            reversal = min(lc_balance, -adjust_CSM)
+            lc_release = reversal          # treated as negative expense
+            lc_balance -= reversal
+            adjust_CSM += reversal         # remainder (if any) to CSM
+            csm_after_adj = csm_start + csm_int + delta_prem - adjust_CSM
+
+        lc_balance += lc_increase
+
+        # ---- 3·5  Coverage-units release
         remaining_units = sum(coverage_units[i:])
-        proportion = coverage_units[i] / remaining_units if remaining_units > 0 else 0
-        release = csm_available * proportion
-        csm_release.append(release)
-        csm_end = csm_available - release
-        csm_start = csm_end
-        expected_benefit = benefits[i] * lc_alloc
-        expected_expense = expenses[i] * lc_alloc
+        release_prop   = coverage_units[i] / remaining_units if remaining_units else 0
+        csm_rel        = csm_after_adj * release_prop
+        csm_end        = csm_after_adj - csm_rel
 
-        if lc_start > 0:
-            rel  = (expected_benefit + expected_expense) * (1 - lc_alloc)              
-            lc_release.append(rel)
-            lc_end = lc_start - rel
-        else:                                    # not onerous
-            lc_release.append(0.0)
-            lc_end = 0.0
-        lc_balance.append(lc_end)
-        lc_start = lc_end
-        
-        insurance_revenue = csm_release[i] + ra_release[i] + expected_benefit + expected_expense
+        # ---- 3·6  RA paths (your new accretion code stays as-is)
+        ra_rel   = ra_release[i]           # already computed earlier
+        ra_int   = ra_accretion[i]
+        ra_end   = ra_balance[i]
 
-        actual_benefit = actual_claims[i]  
-        actual_expense = actual_expenses[i]
-        initial_lc_expense = loss_component_init if i == 0 else 0.0
-        insurance_expense = actual_benefit + actual_expense + initial_lc_expense - lc_release[i]
+        # ---- 3·7  IFRS-17 lines for year i+1
+        exp_ben_exp = benefits[i] + expenses[i]
+        insurance_revenue = csm_rel + ra_rel + exp_ben_exp
+        insurance_expense = actual_claims[i] + actual_expenses[i] \
+                            + lc_increase - lc_release            # LC inc (+) or release (–)
+        ifie = -csm_int + ra_int + pvfcf_balance[i]*current_discount_rates[i]
 
-        ra_interest = ra_accretion[i]
-        pvfcf_interest = pvfcf_balance[i] * current_discount_rates[i]
-        ifie_amount = -interest + ra_interest + pvfcf_interest
+        net_result = insurance_revenue - insurance_expense + ifie
 
-        service_result = insurance_revenue - insurance_expense + ifie_amount
-
+        # ---- 3·8  Store row for table
         pl_data.append({
-            t["csm_release"]: round(csm_release[i], 2),
-            t["ra_release"]: round(ra_release[i], 2),
-            t["expected_benefit"]: round(expected_benefit, 2),
-            t["expected_expense"]: round(expected_expense, 2),
-            t["insurance_revenue"]: round(insurance_revenue, 2),
-            t["actual_claims"]: round(actual_benefit, 2),
-            t["actual_expenses"]: round(actual_expense, 2),
-            t["initial_lc_expense"]: round(initial_lc_expense, 2),
-            t["loss_component_release"]: - round(lc_release[i], 2),
-            t["insurance_expense"]: round(insurance_expense, 2),
-            t["insurance_finance_expense"]: round(ifie_amount, 2),
-            t["net_insurance_result"]: round(service_result, 2),
+            t["csm_release"]:      round(csm_rel,2),
+            t["ra_release"]:       round(ra_rel,2),
+            t["expected_benefit"]: round(benefits[i],2),
+            t["expected_expense"]: round(expenses[i],2),
+            t["insurance_revenue"]: round(insurance_revenue,2),
+            t["actual_claims"]:     round(actual_claims[i],2),
+            t["actual_expenses"]:   round(actual_expenses[i],2),
+            t["insurance_expense"]: round(insurance_expense,2),
+            t["assump_change_loss"]: round(lc_increase,2) if lc_increase else "",
+            t["assump_change_gain"]: round(-lc_release,2) if lc_release  else "",
+            t["insurance_finance_expense"]: round(ifie,2),
+            t["net_insurance_result"]:      round(net_result,2),
         })
 
+        # ---- 3·9  roll forward CSM & RA
+        csm_start = csm_end
+        #  (ra_balance[i] already holds closing RA)
 
 
 
@@ -1469,10 +1783,17 @@ with tab2:
             markdown_table += "|===" + "|===" * projection_years + "|\n"
 
         display_label = f"**{row_label}**" if is_important else row_label
-        values = [
-            f"**{v:,.2f}**" if is_important else f"{v:,.2f}"
-            for v in row_data
-        ]
+        def _fmt(val: object, important: bool) -> str:
+            """Return a nicely-formatted string; bold if important."""
+            try:
+                # works for int, float, numpy numbers, pd NA with float coercion
+                txt = f"{float(val):,.2f}"
+            except (TypeError, ValueError):
+                # leave non-numeric values (or real NaNs) unchanged
+                txt = str(val)
+            return f"**{txt}**" if important else txt
+
+        values = [_fmt(v, is_important) for v in row_data]
         row_str = "| " + display_label + " | " + " | ".join(values) + " |\n"
         markdown_table += row_str
 
@@ -1679,3 +2000,85 @@ with tab4:
          "لا تتحمّل ‎XL Financial Group مسؤولية المحتوى."
          "قد تتوقف الروابط عن العمل — يُنصح المستخدم بالبحث من جديد إذا لزم الأمر.*"
     }[lang])
+
+
+#Simplified PAA tab
+with tab5:
+    st.subheader(t["paa_title"])
+    st.markdown("---")
+
+    # ----- BASIC INPUTS ---------------------------------------------------
+    col_a, col_b = st.columns(2)
+    with col_a:
+        cov_years = st.number_input(t["coverage_period"], 1, 20, 1)
+        gwp       = st.number_input(t["total_gwp"], value=1_000_000.0, step=10_000.0)
+
+    with col_b:
+        loss_ratio = st.number_input(t["expected_claim_ratio"], value=70.0, step=1.0)/100
+        pattern    = st.selectbox(t["earned_premium_pattern"],
+                                  [t["pattern_even"], t["pattern_front"], t["pattern_back"]])
+        run_urtest = st.checkbox(t["onerous_check"], value=False)
+
+    # ----- RECOGNITION PATTERN -------------------------------------------
+    yrs = list(range(1, cov_years+1))
+    if pattern == t["pattern_even"]:
+        earn_factor = [1/cov_years]*cov_years
+    elif pattern == t["pattern_front"]:
+        earn_factor = [2/(cov_years*(cov_years+1))*(cov_years-i+1) for i in yrs]
+    else:  # back-loaded
+        earn_factor = [2/(cov_years*(cov_years+1))*i for i in yrs]
+
+    earned_prem = [gwp * f for f in earn_factor]
+    cum_earned  = [sum(earned_prem[:i]) for i in yrs]
+    unearned    = [gwp - ce for ce in cum_earned]
+
+    # ----- INITIAL BALANCES ----------------------------------------------
+    lrc_open = gwp                      # simplest: acquisition CF = 0
+    lic_open = 0.0                     # assume no incurred claims initially
+
+    # ----- TABLE CALC -----------------------------------------------------
+    rows = []
+    onerous_now = False
+    for i, yr in enumerate(yrs, start=0):
+        revenue = earned_prem[i]
+        claims  = revenue * loss_ratio
+
+        # service expense = claims (no RA / no exp here)
+        service_exp = claims
+        result_srv  = revenue - service_exp
+
+        # update LRC & LIC
+        lrc_close = unearned[i]
+        lic_close = lic_open + claims   # still no payments modelled
+
+        if run_urtest:
+            onerous_now = lrc_close < 0
+
+        rows.append({
+            t["year"]: yr,
+            t["revenue"]: revenue,
+            t["claims_incurred"]: claims,
+            t["exp_recognised"]: service_exp,
+            t["net_result"]: result_srv,
+            t["lrc_init"] if i==0 else "": lrc_open if i==0 else "",
+            t["lic_init"] if i==0 else "": lic_open if i==0 else "",
+            "LRC close": lrc_close,
+            "LIC close": lic_close,
+            "Onerous?": "⚠️" if onerous_now else "✅"
+        })
+
+        # roll forward openings
+        lrc_open = lrc_close
+        lic_open = lic_close
+
+    # --- build DataFrame and apply number-only formatting -------------------
+    df = pd.DataFrame(rows).set_index(t["year"])
+
+    # choose only numeric columns for formatting
+    num_cols = df.select_dtypes("number").columns
+    fmt_dict = {col: "{:,.0f}" for col in num_cols}
+
+    st.dataframe(df.style.format(fmt_dict), use_container_width=True)
+
+
+
