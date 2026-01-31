@@ -662,7 +662,7 @@ lang = st.selectbox("🌍 Choose Language", options=["en", "zh", "fr", "ar"], fo
 t = translations[lang]
 
 #Adding different tabs for different functions
-tab1, tab2, tab3, tab4, tab5 = st.tabs([t["tab_ifrs17"], t["tab_pnl_statement"], t["tab_job_board"], t["news_tab_title"], t["tab_paa"]])
+tab1, tab2, tab5 = st.tabs([t["tab_ifrs17"], t["tab_pnl_statement"], t["tab_paa"]])
 
 with tab1:
     # Mode toggle
@@ -1862,31 +1862,31 @@ job_listings = [
     }
 ]
 
-with tab3:
+# with tab3:
     # --- Job Board Section ---
-    st.markdown("---")
-    st.subheader("💼 " + t["job_board"])
-    st.caption("🔎 Last Verified: June 2025")
-
-    for job in job_listings:
-        with st.container():
-            st.markdown(f"**🧑‍💼 {job['title']}**  \n"
-                        f"🏢 {job['company']} | 📍 {job['location']}  \n"
-                        f"[{t['apply']}]({job['link']})", unsafe_allow_html=True)
-            st.markdown("---")
-
-    #add custom CSS
-    st.markdown("""
-    <style>
-    a {
-        text-decoration: none;
-        color: #0066cc;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+#    st.markdown("---")
+#    st.subheader("💼 " + t["job_board"])
+#    st.caption("🔎 Last Verified: June 2025")
+#
+#    for job in job_listings:
+#        with st.container():
+#            st.markdown(f"**🧑‍💼 {job['title']}**  \n"
+#                        f"🏢 {job['company']} | 📍 {job['location']}  \n"
+#                        f"[{t['apply']}]({job['link']})", unsafe_allow_html=True)
+#            st.markdown("---")
+#
+#    #add custom CSS
+#    st.markdown("""
+#    <style>
+#    a {
+#        text-decoration: none;
+#        color: #0066cc;
+#    }
+#    a:hover {
+#        text-decoration: underline;
+#    }
+#    </style>
+#    """, unsafe_allow_html=True)
 
 
 
@@ -1976,30 +1976,30 @@ news_items = [
  
 
 
-with tab4:
-    st.subheader("📰 " + t["news_tab_title"])
-
-    for article in news_items:
-        localized_title = article.get(f"title_{lang}", article["title_en"])
-        st.markdown(f"- [{localized_title}]({article['url']}) — {article['date']}")
-
-
-
-    st.markdown("***")
-    st.markdown({
-    "en":"*Disclaimer: Headlines © their respective publishers. "
-         "Links open external sites; XL Financial Group is not responsible for the content. "
-         "Links may stop working—please run a fresh search if needed.*",
-    "zh":"*免责声明：标题版权归原出版方所有。点击链接将跳转至外部网站，"
-         "XL Financial Group 不对其内容承担责任。链接可能失效，如有需要请重新搜索。*",
-    "fr":"*Avertissement : Titres © leurs éditeurs respectifs. Les liens ouvrent des sites externes ;"
-         "XL Financial Group n’est pas responsable du contenu; "
-         "Les liens peuvent devenir inactifs ; effectuez une nouvelle recherche si nécessaire.*",
-    "ar":"*إخلاء مسؤولية: المحتوى لأغراض المعلومات فقط ولا يعد نصيحة مهنية"
-         "عناوين الأخبار © للناشرين الأصليين. الروابط تفتح مواقع خارجية؛ ."
-         "لا تتحمّل ‎XL Financial Group مسؤولية المحتوى."
-         "قد تتوقف الروابط عن العمل — يُنصح المستخدم بالبحث من جديد إذا لزم الأمر.*"
-    }[lang])
+# with tab4:
+#    st.subheader("📰 " + t["news_tab_title"])
+#
+#    for article in news_items:
+#        localized_title = article.get(f"title_{lang}", article["title_en"])
+#        st.markdown(f"- [{localized_title}]({article['url']}) — {article['date']}")
+#
+#
+#
+#    st.markdown("***")
+#    st.markdown({
+#    "en":"*Disclaimer: Headlines © their respective publishers. "
+#         "Links open external sites; XL Financial Group is not responsible for the content. "
+#         "Links may stop working—please run a fresh search if needed.*",
+#    "zh":"*免责声明：标题版权归原出版方所有。点击链接将跳转至外部网站，"
+#         "XL Financial Group 不对其内容承担责任。链接可能失效，如有需要请重新搜索。*",
+#    "fr":"*Avertissement : Titres © leurs éditeurs respectifs. Les liens ouvrent des sites externes ;"
+#         "XL Financial Group n’est pas responsable du contenu; "
+#         "Les liens peuvent devenir inactifs ; effectuez une nouvelle recherche si nécessaire.*",
+#    "ar":"*إخلاء مسؤولية: المحتوى لأغراض المعلومات فقط ولا يعد نصيحة مهنية"
+#         "عناوين الأخبار © للناشرين الأصليين. الروابط تفتح مواقع خارجية؛ ."
+#         "لا تتحمّل ‎XL Financial Group مسؤولية المحتوى."
+#         "قد تتوقف الروابط عن العمل — يُنصح المستخدم بالبحث من جديد إذا لزم الأمر.*"
+#    }[lang])
 
 
 #Simplified PAA tab
